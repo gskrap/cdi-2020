@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'varsity';
+  src: url('../fonts/varsity_regular.woff') format('woff2')
+}
+
+@mixin varsity {
+  font-family: varsity;
+}
+
+.title-text {
+  @include varsity;
+  font-size: 30px;
+}
