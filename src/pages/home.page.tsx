@@ -1,5 +1,6 @@
-import {IonCard, IonCardContent, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
 import React from 'react';
+import ClassListContainer from '../containers/class-list.container';
 
 const HomePage: React.FC = () => {
   return (
@@ -10,15 +11,7 @@ const HomePage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => {
-          return (
-            <IonCard>
-              <IonCardContent>
-                Class {i}
-              </IonCardContent>
-            </IonCard>
-          )
-        })}
+        <ClassListContainer/>
       </IonContent>
     </IonPage>
   );
