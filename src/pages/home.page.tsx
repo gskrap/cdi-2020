@@ -1,6 +1,6 @@
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
 import React from 'react';
-import ClassListContainer from '../containers/class-list.container';
+import UserLogInComponent from '../components/user-log-in.component';
 
 const HomePage: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <ClassListContainer/>
+        <UserLogInComponent />
       </IonContent>
     </IonPage>
   );
