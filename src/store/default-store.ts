@@ -1,15 +1,35 @@
 import reducers from '../reducers/reducers';
-import {createStore} from 'redux';
+import {Action, applyMiddleware, createStore} from 'redux';
+import thunk, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
-const configureStore = (initialState: any) => {
+export type AppThunkAction<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action<string>
+>
+
+export type AppThunkDispatch = ThunkDispatch<
+  AppState,
+  void,
+  Action<any>
+>
+
+export type AppState = {
+  appLoading: boolean,
+}
+
+const initialState = {
+  appLoading: false,
+};
+
+const configureStore = (initialState: AppState) => {
   return createStore(
     reducers,
     initialState,
+    applyMiddleware(thunk),
   )
 };
 
-const store = configureStore({
-  appLoading: false
-});
-
+const store = configureStore(initialState);
 export { store }

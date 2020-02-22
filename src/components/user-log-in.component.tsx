@@ -1,39 +1,82 @@
 import React from 'react';
-import {IonLabel, IonSegment, IonSegmentButton} from '@ionic/react';
+import {IonButton, IonInput, IonItem, IonLabel, IonSegment, IonSegmentButton} from '@ionic/react';
+import {connect} from 'react-redux';
+import {logIn} from '../actions/actions';
+import {AppState, AppThunkDispatch} from '../store/default-store';
 
 enum ActiveFormOptions {
   LOG_IN = 'log-in',
   REGISTER = 'register',
 }
 
-type UserLogInComponentState = {
-  activeForm: ActiveFormOptions,
+type UserLogInComponentProps = {
+  appLoading: boolean,
+  logIn: (email: string, password: string) => void,
 }
 
-class UserLogInComponent extends React.Component<{}, UserLogInComponentState> {
-  constructor(props: {}) {
+type UserLogInComponentState = {
+  activeForm: ActiveFormOptions,
+  email: string,
+  password: string,
+}
+
+class UserLogInComponent extends React.Component<UserLogInComponentProps, UserLogInComponentState> {
+  constructor(props: UserLogInComponentProps) {
     super(props);
     this.state = {
       activeForm: ActiveFormOptions.LOG_IN,
+      email: '',
+      password: '',
     }
   }
 
+  updateEmail = (event: any) => {
+    this.setState({email: event.detail.value});
+  };
+
+  updatePassword = (event: any) => {
+    this.setState({password: event.detail.value});
+  };
+
+  logIn = () => {
+    const {email, password} = this.state;
+    this.props.logIn(email, password);
+  };
+
   renderForm() {
     return this.state.activeForm === 'log-in' ?
-      <div>
-        Log In Form
-      </div>
+      <>
+        <form>
+          <IonItem mode='md'>
+            <IonLabel position="floating">Email</IonLabel>
+            <IonInput onIonChange={this.updateEmail} type='email'></IonInput>
+          </IonItem>
+          <IonItem mode='md'>
+            <IonLabel position="floating">Password</IonLabel>
+            <IonInput onIonChange={this.updatePassword} type='password'></IonInput>
+          </IonItem>
+        </form>
+        <IonButton className='mtxxl' expand='block' onClick={this.logIn}>Log In</IonButton>
+      </>
       :
-      <div>
-        Register Form
-      </div>
+      <>
+        Register Form Goes Here
+      </>
+  }
+
+  renderLoader() {
+    if (this.props.appLoading) {
+      return <h1>Loading</h1>
+    }
   }
 
   render() {
     return <>
       <div className='maxl'>
         <IonSegment value={this.state.activeForm}
-                    onIonChange={e => this.setState({activeForm: e.detail.value as ActiveFormOptions})}>
+                    onIonChange={e => this.setState({activeForm: e.detail.value as ActiveFormOptions})}
+                    mode='ios'
+        >
           <IonSegmentButton value={ActiveFormOptions.LOG_IN}>
             <IonLabel>Log In</IonLabel>
           </IonSegmentButton>
@@ -41,12 +84,29 @@ class UserLogInComponent extends React.Component<{}, UserLogInComponentState> {
             <IonLabel>Register</IonLabel>
           </IonSegmentButton>
         </IonSegment>
-        <div className='mtxl fdr fjc'>
+        <div className='mtl'>
           {this.renderForm()}
+        </div>
+        <div className='mtl fdr fjc'>
+          {this.renderLoader()}
         </div>
       </div>
     </>
   }
 }
 
-export default UserLogInComponent;
+const mapState = (state: AppState) => {
+  return {
+    appLoading: state.appLoading,
+  }
+};
+
+const mapDispatch = (dispatch: AppThunkDispatch) => {
+  return {
+    logIn: (email: string, password: string) => {
+      dispatch(logIn(email, password))
+    },
+  }
+};
+
+export default connect(mapState, mapDispatch)(UserLogInComponent);
