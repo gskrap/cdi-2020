@@ -6,6 +6,14 @@ const reducers = (state: any, action: any) => {
       return Object.assign({}, state, {
         appLoading: action.bool
       });
+    case ACTION_TYPES.UPDATE_LOGGED_IN:
+      return Object.assign({}, state, {
+        loggedIn: action.bool
+      });
+    case ACTION_TYPES.UPDATE_CURRENT_USER:
+      return Object.assign({}, state, {
+        currentUser: action.user
+      });
     default:
       return state
   }

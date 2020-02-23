@@ -1,6 +1,7 @@
 import reducers from '../reducers/reducers';
 import {Action, applyMiddleware, createStore} from 'redux';
 import thunk, {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {User} from '../models/user';
 
 export type AppThunkAction<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -17,10 +18,14 @@ export type AppThunkDispatch = ThunkDispatch<
 
 export type AppState = {
   appLoading: boolean,
+  loggedIn: boolean,
+  currentUser: User | null,
 }
 
-const initialState = {
+const initialState: AppState = {
   appLoading: false,
+  loggedIn: false,
+  currentUser: null,
 };
 
 const configureStore = (initialState: AppState) => {

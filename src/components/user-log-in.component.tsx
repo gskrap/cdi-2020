@@ -2,7 +2,7 @@ import React from 'react';
 import {IonButton, IonInput, IonItem, IonLabel, IonSegment, IonSegmentButton} from '@ionic/react';
 import {connect} from 'react-redux';
 import {logIn} from '../actions/actions';
-import {AppState, AppThunkDispatch} from '../store/default-store';
+import {AppThunkDispatch} from '../store/default-store';
 
 enum ActiveFormOptions {
   LOG_IN = 'log-in',
@@ -10,7 +10,6 @@ enum ActiveFormOptions {
 }
 
 type UserLogInComponentProps = {
-  appLoading: boolean,
   logIn: (email: string, password: string) => void,
 }
 
@@ -48,11 +47,11 @@ class UserLogInComponent extends React.Component<UserLogInComponentProps, UserLo
       <>
         <form>
           <IonItem mode='md'>
-            <IonLabel position="floating">Email</IonLabel>
+            <IonLabel position='floating'>Email</IonLabel>
             <IonInput onIonChange={this.updateEmail} type='email'></IonInput>
           </IonItem>
           <IonItem mode='md'>
-            <IonLabel position="floating">Password</IonLabel>
+            <IonLabel position='floating'>Password</IonLabel>
             <IonInput onIonChange={this.updatePassword} type='password'></IonInput>
           </IonItem>
         </form>
@@ -62,12 +61,6 @@ class UserLogInComponent extends React.Component<UserLogInComponentProps, UserLo
       <>
         Register Form Goes Here
       </>
-  }
-
-  renderLoader() {
-    if (this.props.appLoading) {
-      return <h1>Loading</h1>
-    }
   }
 
   render() {
@@ -87,19 +80,10 @@ class UserLogInComponent extends React.Component<UserLogInComponentProps, UserLo
         <div className='mtl'>
           {this.renderForm()}
         </div>
-        <div className='mtl fdr fjc'>
-          {this.renderLoader()}
-        </div>
       </div>
     </>
   }
 }
-
-const mapState = (state: AppState) => {
-  return {
-    appLoading: state.appLoading,
-  }
-};
 
 const mapDispatch = (dispatch: AppThunkDispatch) => {
   return {
@@ -109,4 +93,4 @@ const mapDispatch = (dispatch: AppThunkDispatch) => {
   }
 };
 
-export default connect(mapState, mapDispatch)(UserLogInComponent);
+export default connect(null, mapDispatch)(UserLogInComponent);

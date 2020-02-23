@@ -1,6 +1,10 @@
 export const checkHttpResponse = (response: Response) => {
   if (response.ok) {
-    return response.json();
+    if (response.status === 204) {
+      return Promise.resolve();
+    } else {
+      return response.json();
+    }
   } else {
     throw new Error();
   }
