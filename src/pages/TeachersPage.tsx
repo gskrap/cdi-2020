@@ -6,7 +6,7 @@ import TeacherList from '../components/TeacherList';
 const TeachersPage: React.FC = () => {
   return (
     <IonPage id='teachers-page'>
-      <AppHeader/>
+      <AppHeader title='Teachers'/>
       <IonContent>
         <TeacherList/>
       </IonContent>

@@ -33,7 +33,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
 
   return (
     <IonPage id='home-page'>
-      <AppHeader/>
+      <AppHeader title='Schedule'/>
       <IonContent>
         {loading && <Loader/>}
         {!loading && !loggedIn && <UserLogIn/>}

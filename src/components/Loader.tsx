@@ -10,7 +10,7 @@ const Loader: React.FC<LoaderProps> = ({ fadeTrigger }) => {
     if (fadeTrigger) {
       setTimeout(() => {
         const animation = createAnimation()
-          .addElement(document.querySelector('img')!)
+          .addElement(document.querySelector('#loader')!)
           .duration(500)
           .direction('alternate')
           .iterations(1)
@@ -25,7 +25,7 @@ const Loader: React.FC<LoaderProps> = ({ fadeTrigger }) => {
 
   return (
     <div className="fdr fjc height100">
-      <img className="loading-image" src="/assets/cdi-logo.png" alt="loading"/>
+      <img id='loader' className="loading-image" src="/assets/cdi-logo-white.png" alt="loading"/>
     </div>
   )
 };

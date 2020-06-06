@@ -3,11 +3,62 @@
   src: url('../fonts/varsity_regular.woff') format('woff2')
 }
 
-@mixin varsity {
-  font-family: varsity;
+@font-face {
+  font-family: 'openSans';
+  src: url('../fonts/openSansRegular.woff2') format('woff2')
 }
 
-.title-text {
-  @include varsity;
-  font-size: 30px;
+@font-face {
+  font-family: 'openSansBold';
+  src: url('../fonts/openSansBold.woff2') format('woff2')
+}
+
+@font-face {
+  font-family: 'openSansExtraBold';
+  src: url('../fonts/openSansExtraBold.woff2') format('woff2')
+}
+
+* {
+  font-family: openSans;
+  color: var(--ion-color-primary-contrast);
+}
+
+.openSansBold {
+  font-family: openSansBold;
+}
+
+.openSansExtraBold {
+  font-family: openSansExtraBold;
+}
+
+.font12 {
+  font-size: 12px !important;
+}
+
+.font14 {
+  font-size: 14px !important;
+}
+
+.font16 {
+  font-size: 16px !important;
+}
+
+.font18 {
+  font-size: 18px !important;
+}
+
+.font20 {
+  font-size: 20px !important;
+}
+
+.tac {
+  text-align: center;
+}
+
+.tar {
+  text-align: right;
+}
+
+.r180 {
+  transform: rotate(180deg);
 }

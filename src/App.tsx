@@ -53,11 +53,11 @@ const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
             <h1 className='mlxl'>Menu</h1>
             <IonItem className='pvl' routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
               <span>Teachers</span>
-              <IonIcon icon={peopleCircleOutline} slot='end'></IonIcon>
+              <IonIcon icon={peopleCircleOutline} slot='end'/>
             </IonItem>
             <IonItem className='pvl' routerLink='/' routerDirection='root' onClick={handleLogOut}>
               <span>Log Out</span>
-              <IonIcon icon={logOutOutline} slot='end'></IonIcon>
+              <IonIcon icon={logOutOutline} slot='end'/>
             </IonItem>
           </IonList>
         </IonMenu>

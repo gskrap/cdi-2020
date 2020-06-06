@@ -2,3 +2,34 @@
   margin-top: 12px;
   margin-bottom: 12px;
 }
+
+ion-content {
+  --background: linear-gradient(180deg, #1f7582, #414d79, #63497b);
+}
+
+ion-menu {
+  --background: linear-gradient(180deg, #1f7582, #414d79, #63497b);
+}
+
+ion-item {
+  --background: transparent;
+}
+
+ion-list {
+  background: inherit !important;
+}
+
+ion-card {
+  --background: transparent;
+  border-radius: 0;
+  box-shadow: rgba(255, 255, 255, 0.16) 0 12px 56px;
+  margin: 16px;
+}
+
+ion-card-content {
+  padding: 24px !important;
+}
+
+.header-image {
+  max-height: 40px;
+}
