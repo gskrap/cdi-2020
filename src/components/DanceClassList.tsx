@@ -36,7 +36,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
     } else if (triggerActive) {
       setTimeout(() => {
         setLoaded(true);
-      }, 1000);
+      }, 500);
     }
   }, [loading, triggerActive]);
 

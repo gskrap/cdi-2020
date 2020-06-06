@@ -1,5 +1,10 @@
 import {
-  FETCH_DANCE_CLASSES, FETCH_DANCE_CLASSES_FAIL, FETCH_DANCE_CLASSES_SUCCESS,
+  FETCH_DANCE_CLASSES,
+  FETCH_DANCE_CLASSES_FAIL,
+  FETCH_DANCE_CLASSES_SUCCESS,
+  FETCH_TEACHERS,
+  FETCH_TEACHERS_FAIL,
+  FETCH_TEACHERS_SUCCESS,
   LOG_IN_FAIL,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
@@ -51,6 +56,22 @@ const reducers = (state: any, action: any) => {
         ...state,
         danceClasses: action.payload,
         danceClassesLoading: false,
+      };
+    case FETCH_TEACHERS:
+      return {
+        ...state,
+        teachersLoading: true,
+      };
+    case FETCH_TEACHERS_FAIL:
+      return {
+        ...state,
+        teachersLoading: false,
+      };
+    case FETCH_TEACHERS_SUCCESS:
+      return {
+        ...state,
+        teachers: action.payload,
+        teachersLoading: false,
       };
     default:
       return state

@@ -1,8 +1,17 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
+import {Route} from 'react-router-dom';
+import {
+  IonApp,
+  IonIcon,
+  IonItem,
+  IonList,
+  IonMenu,
+  IonRouterOutlet,
+} from '@ionic/react';
+import { menuController } from '@ionic/core';
 import { IonReactRouter } from '@ionic/react-router';
 import HomePage from './pages/HomePage';
+import TeachersPage from './pages/TeachersPage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,16 +34,37 @@ import './theme/variables.scss';
 
 /* My Stylesheets */
 import './theme/app.scss';
+import {logOutOutline} from 'ionicons/icons';
+import actions, {MappedActions} from './actions/actions';
+import {connect} from 'react-redux';
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path='/' render={() => <Redirect to='/home' />} />
-        <Route exact path='/home' component={HomePage} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
+  const handleLogOut = () => {
+    actions.logOut();
+    menuController.close();
+  };
 
-export default App;
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonMenu side='end' contentId='router'>
+          <IonList>
+            <IonItem routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
+              Teachers
+            </IonItem>
+            <IonItem routerLink='/' routerDirection='root' onClick={handleLogOut}>
+              <IonIcon icon={logOutOutline}></IonIcon>
+              Log Out
+            </IonItem>
+          </IonList>
+        </IonMenu>
+        <IonRouterOutlet id='router'>
+          <Route exact path='/' component={HomePage}/>
+          <Route exact path='/teachers' component={TeachersPage}/>
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  )
+};
+
+export default connect(null, actions)(App);

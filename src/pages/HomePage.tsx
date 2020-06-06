@@ -1,12 +1,12 @@
-import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {IonContent, IonPage,} from '@ionic/react';
 import React from 'react';
 import UserLogIn from '../components/UserLogIn';
 import {AppState} from '../store/defaultStore';
 import actions, {MappedActions} from '../actions/actions';
 import {connect} from 'react-redux';
 import DanceClassList from '../components/DanceClassList';
-import {logOutOutline} from 'ionicons/icons';
 import Loader from '../components/Loader';
+import AppHeader from '../components/AppHeader';
 
 type HomePageProps = {
   loading: boolean,
@@ -31,22 +31,9 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
     }
   }, [actions]);
 
-  const renderLogOutButton = () => (
-    <IonButtons slot='end'>
-      <IonButton onClick={() => actions.logOut()}>
-        <IonIcon icon={logOutOutline}></IonIcon>
-      </IonButton>
-    </IonButtons>
-  );
-
   return (
     <IonPage id='home-page'>
-      <IonHeader>
-        <IonToolbar color='primary'>
-          <IonTitle className='title-text'>CDI</IonTitle>
-          {loggedIn && renderLogOutButton()}
-        </IonToolbar>
-      </IonHeader>
+      <AppHeader/>
       <IonContent>
         {loading && <Loader/>}
         {!loading && !loggedIn && <UserLogIn/>}

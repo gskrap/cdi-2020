@@ -1,14 +1,27 @@
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {Dispatch} from 'redux';
 import {
-  FETCH_DANCE_CLASSES, FETCH_DANCE_CLASSES_FAIL, FETCH_DANCE_CLASSES_SUCCESS,
-  FetchDanceClassesAction, FetchDanceClassesFailAction, FetchDanceClassesSuccessAction,
+  FETCH_DANCE_CLASSES,
+  FETCH_DANCE_CLASSES_FAIL,
+  FETCH_DANCE_CLASSES_SUCCESS,
+  FETCH_TEACHERS, FETCH_TEACHERS_FAIL, FETCH_TEACHERS_SUCCESS,
+  FetchDanceClassesAction,
+  FetchDanceClassesFailAction,
+  FetchDanceClassesSuccessAction,
+  FetchTeachersAction, FetchTeachersFailAction,
+  FetchTeachersSuccessAction,
   LOG_IN_FAIL,
   LOG_IN_REQUEST,
-  LOG_IN_SUCCESS, LOG_OUT_FAIL, LOG_OUT_REQUEST, LOG_OUT_SUCCESS,
+  LOG_IN_SUCCESS,
+  LOG_OUT_FAIL,
+  LOG_OUT_REQUEST,
+  LOG_OUT_SUCCESS,
   LogInFailAction,
   LogInRequestAction,
-  LogInSuccessAction, LogOutFailAction, LogOutRequestAction, LogOutSuccessAction
+  LogInSuccessAction,
+  LogOutFailAction,
+  LogOutRequestAction,
+  LogOutSuccessAction
 } from './actionTypes';
 
 export const TIMEOUT = 500;
@@ -77,6 +90,23 @@ export default (dispatch: Dispatch) => ({
         }, TIMEOUT);
       } catch (e) {
         dispatch<FetchDanceClassesFailAction>({type: FETCH_DANCE_CLASSES_FAIL});
+        console.log(e);
+      }
+    },
+
+    async fetchTeachers() {
+      dispatch<FetchTeachersAction>({type: FETCH_TEACHERS});
+      try {
+        const response = await API.get('/teachers');
+        const responseBody = await checkHttpResponse(response);
+        setTimeout(() => {
+          dispatch<FetchTeachersSuccessAction>({
+            type: FETCH_TEACHERS_SUCCESS,
+            payload: responseBody,
+          })
+        }, TIMEOUT);
+      } catch (e) {
+        dispatch<FetchTeachersFailAction>({type: FETCH_TEACHERS_FAIL});
         console.log(e);
       }
     },

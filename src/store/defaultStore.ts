@@ -1,21 +1,8 @@
 import reducers from '../reducers/reducers';
-import {Action, applyMiddleware, createStore} from 'redux';
-import thunk, {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {applyMiddleware, createStore} from 'redux';
+import thunk from 'redux-thunk';
 import {DanceClass} from '../models/DanceClass';
 import {User} from '../models/User';
-
-export type AppThunkAction<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppState,
-  unknown,
-  Action<string>
->
-
-export type AppThunkDispatch = ThunkDispatch<
-  AppState,
-  void,
-  Action<any>
->
 
 export type AppState = {
   logInLoading: boolean,
@@ -23,6 +10,8 @@ export type AppState = {
   currentUser: User | null,
   danceClasses: DanceClass[] | null,
   danceClassesLoading: boolean,
+  teachers: User[] | null,
+  teachersLoading: boolean,
 }
 
 const initialState: AppState = {
@@ -31,6 +20,8 @@ const initialState: AppState = {
   currentUser: null,
   danceClasses: null,
   danceClassesLoading: false,
+  teachers: null,
+  teachersLoading: false,
 };
 
 const configureStore = (initialState: AppState) => {

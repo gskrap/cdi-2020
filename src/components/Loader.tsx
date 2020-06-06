@@ -19,7 +19,7 @@ const Loader: React.FC<LoaderProps> = ({ fadeTrigger }) => {
             { offset: 1, transform: 'scale(30)', opacity: '0'}
           ]);
         animation.play();
-      }, 1000)
+      }, 700)
     }
   }, [fadeTrigger]);
 
