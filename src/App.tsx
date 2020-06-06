@@ -34,7 +34,8 @@ import './theme/variables.scss';
 
 /* My Stylesheets */
 import './theme/app.scss';
-import {logOutOutline} from 'ionicons/icons';
+
+import {logOutOutline, peopleCircleOutline} from 'ionicons/icons';
 import actions, {MappedActions} from './actions/actions';
 import {connect} from 'react-redux';
 
@@ -49,12 +50,14 @@ const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
       <IonReactRouter>
         <IonMenu side='end' contentId='router'>
           <IonList className='ptxxxl'>
-            <IonItem routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
-              Teachers
+            <h1 className='mlxl'>Menu</h1>
+            <IonItem className='pvl' routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
+              <span>Teachers</span>
+              <IonIcon icon={peopleCircleOutline} slot='end'></IonIcon>
             </IonItem>
-            <IonItem routerLink='/' routerDirection='root' onClick={handleLogOut}>
-              <IonIcon icon={logOutOutline}></IonIcon>
-              Log Out
+            <IonItem className='pvl' routerLink='/' routerDirection='root' onClick={handleLogOut}>
+              <span>Log Out</span>
+              <IonIcon icon={logOutOutline} slot='end'></IonIcon>
             </IonItem>
           </IonList>
         </IonMenu>
