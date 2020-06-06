@@ -1,6 +1,6 @@
 import {Group} from './Group';
 import {Location} from './Location';
-import {User} from '@ionic/cli';
+import {User} from './User';
 
 export interface DanceClass {
   created_at: string,

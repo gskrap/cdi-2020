@@ -1,20 +1,24 @@
 import React from 'react';
-import {IonCard, IonCardContent} from '@ionic/react';
 import actions, {MappedActions} from '../actions/actions';
 import {connect} from 'react-redux';
 import {AppState} from '../store/defaultStore';
 import {DanceClass} from '../models/DanceClass';
+import Loader from './Loader';
+import DanceClassCard from './DanceClassCard';
 
 type DanceClassListProps = {
   loading: boolean,
   danceClasses: DanceClass[] | null,
 }
 
-const ClassList: React.FC<DanceClassListProps & MappedActions<typeof actions>> = ({
+const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof actions>> = ({
   loading,
   danceClasses,
   actions,
 }) => {
+  const [triggerActive, setTriggerActive] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
+
   React.useEffect(() => {
     const fetchDanceClasses = async () => {
       try {
@@ -26,26 +30,22 @@ const ClassList: React.FC<DanceClassListProps & MappedActions<typeof actions>> =
     fetchDanceClasses();
   }, [actions]);
 
-  const renderLoader = () => (
-    <div className='fdr fjc'>
-      <h1>Loading</h1>
-    </div>
-  );
+  React.useEffect(() => {
+    if (loading) {
+      setTriggerActive(true);
+    } else if (triggerActive) {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 1000);
+    }
+  }, [loading, triggerActive]);
 
   return (
     <>
-      {loading
-        ? renderLoader()
-        : (
-            danceClasses && danceClasses.map((danceClass, i) => (
-            <IonCard key={i}>
-              <IonCardContent>
-                {danceClass.name}
-              </IonCardContent>
-            </IonCard>
-          ))
-        )
-      }
+      {!loaded && <Loader fadeTrigger={!loading}/>}
+      {loaded && danceClasses && danceClasses.map((danceClass, i) => (
+        <DanceClassCard key={i} danceClass={danceClass}/>
+      ))}
     </>
   )
 };
@@ -57,4 +57,4 @@ const mapState = (state: AppState) => {
   }
 };
 
-export default connect(mapState, actions)(ClassList);
+export default connect(mapState, actions)(DanceClassList);
