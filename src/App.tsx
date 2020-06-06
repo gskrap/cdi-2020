@@ -48,7 +48,7 @@ const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
     <IonApp>
       <IonReactRouter>
         <IonMenu side='end' contentId='router'>
-          <IonList>
+          <IonList className='ptxxxl'>
             <IonItem routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
               Teachers
             </IonItem>

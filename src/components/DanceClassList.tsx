@@ -17,7 +17,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
   actions,
 }) => {
   const [triggerActive, setTriggerActive] = React.useState(false);
-  const [loaded, setLoaded] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(!!danceClasses);
 
   React.useEffect(() => {
     const fetchDanceClasses = async () => {

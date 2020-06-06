@@ -7,10 +7,11 @@ $whitespace-l:         $base-unit;
 $whitespace-xl:        $base-unit * 2;
 $whitespace-xxl:       $base-unit * 3;
 $whitespace-xxxl:      $base-unit * 4;
+$whitespace-xxxxl:     $base-unit * 5;
 
 $types: (p, m);                               // padding, margin
 $locations: (a, v, h, t, r, b, l);            // all, vertical, horizontal, top, right, bottom, left
-$t-shirt-sizes: (n, s, m, l, xl, xxl, xxxl);  // multiple of base unit
+$t-shirt-sizes: (n, s, m, l, xl, xxl, xxxl, xxxxl);  // multiple of base unit
 
 $key-groups: (p padding, m margin, a '', v -top -bottom, h -left -right, t -top, r -right, b -bottom, l -left);
 
@@ -45,4 +46,4 @@ $key-groups: (p padding, m margin, a '', v -top -bottom, h -left -right, t -top,
   }
 }
 
-@include whitespace(($whitespace-none, $whitespace-s, $whitespace-m, $whitespace-l, $whitespace-xl, $whitespace-xxl, $whitespace-xxxl))
+@include whitespace(($whitespace-none, $whitespace-s, $whitespace-m, $whitespace-l, $whitespace-xl, $whitespace-xxl, $whitespace-xxxl, $whitespace-xxxxl))
