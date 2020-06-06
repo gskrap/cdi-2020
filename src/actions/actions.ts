@@ -1,102 +1,84 @@
-import {AppThunkAction} from '../store/default-store';
-import {checkHttpResponse} from '../helpers/http-helper';
-import {User} from '../models/user';
-
-export const API = 'https://cdi-api.herokuapp.com';
-// export const API = 'http://localhost:3000';
+import {API, checkHttpResponse} from '../helpers/httpHelper';
+import {Dispatch} from 'redux';
+import {
+  FETCH_DANCE_CLASSES, FETCH_DANCE_CLASSES_FAIL, FETCH_DANCE_CLASSES_SUCCESS,
+  FetchDanceClassesAction, FetchDanceClassesFailAction, FetchDanceClassesSuccessAction,
+  LOG_IN_FAIL,
+  LOG_IN_REQUEST,
+  LOG_IN_SUCCESS, LOG_OUT_FAIL, LOG_OUT_REQUEST, LOG_OUT_SUCCESS,
+  LogInFailAction,
+  LogInRequestAction,
+  LogInSuccessAction, LogOutFailAction, LogOutRequestAction, LogOutSuccessAction
+} from './actionTypes';
 
 export const TIMEOUT = 500;
+export type MappedActions<T extends (...args: any[]) => any> = ReturnType<T>;
 
-export enum ACTION_TYPES {
-  UPDATE_APP_LOADING = 'UPDATE_APP_LOADING',
-  UPDATE_LOGGED_IN = 'UPDATE_LOGGED_IN',
-  UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER',
-}
+export default (dispatch: Dispatch) => ({
+  actions: {
+    async fetchPermissions() {
+      dispatch<LogInRequestAction>({type: LOG_IN_REQUEST});
+      try {
+        const response = await API.get('/user_status');
+        const responseBody = await checkHttpResponse(response);
+        setTimeout(() => {
+          dispatch<LogInSuccessAction>({
+            type: LOG_IN_SUCCESS,
+            payload: responseBody,
+          })
+        }, TIMEOUT)
+      } catch (e) {
+        dispatch<LogInFailAction>({type: LOG_IN_FAIL});
+        console.log(e);
+      }
+    },
 
-export const getPermissions = (): AppThunkAction => dispatch => {
-  dispatch(updateAppLoading(true));
-  setTimeout(() => {
-    fetch(API + '/user_status', {
-      method: 'get',
-      headers: {'Authorization': window.localStorage.getItem('auth_token')!}
-    })
-      .then(response => checkHttpResponse(response))
-      .then((response) => {
-        dispatch(updateCurrentUser(response.user));
-        dispatch(updateLoggedIn(response.loggedIn));
-        dispatch(updateAppLoading(false));
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(updateAppLoading(false));
-      })
-  }, TIMEOUT)
-}
+    async logIn(email: string, password: string) {
+      dispatch<LogInRequestAction>({type: LOG_IN_REQUEST});
+      try {
+        const session = {session: {email, password}};
+        const response = await API.post('/sessions', session);
+        const responseBody = await checkHttpResponse(response);
+        setTimeout(() => {
+          window.localStorage.setItem('auth_token', responseBody.auth_token);
+          this.fetchPermissions();
+        }, TIMEOUT);
+      } catch (e) {
+        dispatch<LogInFailAction>({type: LOG_IN_FAIL});
+        console.log(e);
+      }
+    },
 
-export const logIn = (email: string, password: string): AppThunkAction => dispatch => {
-  dispatch(updateAppLoading(true));
-  setTimeout(() => {
-    fetch(API + '/sessions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        session: {
-          email: email,
-          password: password,
-        }
-      }),
-    })
-      .then(response => checkHttpResponse(response))
-      .then(response => {
-        window.localStorage.setItem('auth_token', response.auth_token);
-        dispatch(getPermissions());
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(updateAppLoading(false));
-      })
-  }, TIMEOUT)
-};
+    async logOut() {
+      dispatch<LogOutRequestAction>({type: LOG_OUT_REQUEST});
+      try {
+        const response = await API.delete(`/sessions/${window.localStorage.getItem('auth_token')}`);
+        await checkHttpResponse(response);
+        setTimeout(() => {
+          window.localStorage.removeItem('auth_token')
+          dispatch<LogOutSuccessAction>({type: LOG_OUT_SUCCESS});
+        }, TIMEOUT);
+      } catch (e) {
+        dispatch<LogOutFailAction>({type: LOG_OUT_FAIL});
+        console.log(e);
+      }
+    },
 
-export const logOut = (): AppThunkAction => dispatch => {
-  dispatch(updateAppLoading(true))
-  setTimeout(() => {
-    fetch(API + '/sessions/' + window.localStorage.getItem('auth_token'), {
-      method: 'delete',
-    })
-      .then(response => checkHttpResponse(response))
-      .then(() => {
-        window.localStorage.removeItem('auth_token')
-        dispatch(updateLoggedIn(false));
-        dispatch(updateAppLoading(false));
-        dispatch(updateCurrentUser(null));
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(updateAppLoading(false));
-      })
-  }, TIMEOUT)
-}
-
-export const updateAppLoading = (bool: boolean) => {
-  return {
-    type: ACTION_TYPES.UPDATE_APP_LOADING,
-    bool,
-  }
-};
-
-export const updateLoggedIn = (bool: boolean) => {
-  return {
-    type: ACTION_TYPES.UPDATE_LOGGED_IN,
-    bool,
-  }
-};
-
-export const updateCurrentUser = (user: User | null) => {
-  return {
-    type: ACTION_TYPES.UPDATE_CURRENT_USER,
-    user,
-  }
-};
+    async fetchDanceClasses(prefix?: string) {
+      dispatch<FetchDanceClassesAction>({type: FETCH_DANCE_CLASSES});
+      try {
+        const response = await API.get(`${prefix || ''}/dance_classes`);
+        const responseBody = await checkHttpResponse(response);
+        setTimeout(() => {
+          dispatch<FetchDanceClassesSuccessAction>({
+            type: FETCH_DANCE_CLASSES_SUCCESS,
+            payload: responseBody,
+          })
+        }, TIMEOUT);
+      } catch (e) {
+        dispatch<FetchDanceClassesFailAction>({type: FETCH_DANCE_CLASSES_FAIL});
+        console.log(e);
+      }
+    },
+  },
+})
