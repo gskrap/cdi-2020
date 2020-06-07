@@ -1,7 +1,7 @@
 import React from 'react';
 import {IonIcon, IonItem} from '@ionic/react';
 import {User} from '../models/User';
-import {bodyOutline} from 'ionicons/icons';
+import {body} from 'ionicons/icons';
 
 type TeacherCardProps = {
   teacher: User,
@@ -15,7 +15,7 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
       <div className='flex1 fdr'>
         <div className='fdc fjc'>
           <div className='profile-bubble'>
-            <IonIcon icon={bodyOutline}/>
+            <IonIcon icon={body}/>
           </div>
         </div>
         <div className='font18 teacher-name'>

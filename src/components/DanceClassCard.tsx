@@ -4,7 +4,7 @@ import React from 'react';
 import moment from 'moment';
 import {
   arrowUndoOutline,
-  bodyOutline,
+  body,
   caretDownOutline,
   createOutline,
   locationOutline,
@@ -74,7 +74,7 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
                   <IonIcon icon={caretDownOutline} />
                 </IonFabButton>
                 <IonFabList side="bottom">
-                  <IonFabButton>
+                  <IonFabButton routerLink={`/danceClasses/${danceClass.id}/edit`} routerDirection='forward'>
                     <IonIcon icon={createOutline} />
                   </IonFabButton>
                   <IonFabButton onClick={() => setShowDeleteWarning(true)}>
@@ -95,7 +95,7 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
                 ))}
               </div>
             )}
-            {teacher && <div><IonIcon className='prm' icon={bodyOutline}/>{`${teacher.first_name} ${teacher.last_name}`}</div>}
+            {teacher && <div><IonIcon className='prm' icon={body}/>{`${teacher.first_name} ${teacher.last_name}`}</div>}
             {secondary_teacher && <div className='padded20'>{`${secondary_teacher.first_name} ${secondary_teacher.last_name}`}</div>}
           </IonCardContent>
         </IonCard>

@@ -13,7 +13,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import HomePage from './pages/HomePage';
 import TeachersPage from './pages/TeachersPage';
 import TeacherDetailsPage from './pages/TeacherDetailsPage';
-import {bodyOutline, logOutOutline, settingsOutline} from 'ionicons/icons';
+import {body, logOutOutline, settingsOutline} from 'ionicons/icons';
 import actions, {MappedActions} from './actions/actions';
 import {connect} from 'react-redux';
 import {AppState} from './store/defaultStore';
@@ -32,6 +32,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.scss';
 import './theme/app.scss';
 import AdminPage from './pages/AdminPage';
+import DanceClassDetailsPage from './pages/DanceClassDetailsPage';
 
 type AppProps = {
   userRole: UserRole | null;
@@ -57,7 +58,7 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
             )}
             <IonItem className='pvl' routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
               <span>Teachers</span>
-              <IonIcon icon={bodyOutline} slot='end'/>
+              <IonIcon icon={body} slot='end'/>
             </IonItem>
             <IonItem className='pvl' routerLink='/' routerDirection='root' onClick={handleLogOut}>
               <span>Log Out</span>
@@ -68,6 +69,7 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
         <IonRouterOutlet id='router'>
           <Route exact path='/' component={HomePage}/>
           <Route exact path='/admin' component={AdminPage}/>
+          <Route exact path='/danceClasses/:danceClassId/edit' component={DanceClassDetailsPage}/>
           <Route exact path='/teachers' component={TeachersPage}/>
           <Route exact path='/teachers/:teacherId' component={TeacherDetailsPage}/>
         </IonRouterOutlet>
