@@ -3,6 +3,13 @@
   margin-bottom: 12px;
 }
 
+.delete-dance-class-warning .alert-wrapper {
+  background: var(--ion-color-primary);
+  .alert-title, .alert-message {
+    color: var(--ion-color-primary-contrast);
+  }
+}
+
 ion-content {
   --background: linear-gradient(180deg, #1f7582, #414d79, #63497b);
 }
@@ -32,6 +39,26 @@ ion-segment-button {
 
 ion-card-content {
   padding: 16px !important;
+}
+
+ion-toast {
+  --background: var(--ion-color-tertiary);
+}
+
+ion-fab-button {
+  --background: var(--ion-color-primary);
+  --background-activated: var(--ion-color-primary);
+  width: 30px;
+  height: 30px;
+  ion-icon {
+    font-size: 14px;
+  }
+}
+
+ion-fab-list {
+  margin: 0;
+  left: -13px;
+  top: 34px;
 }
 
 .header-image {

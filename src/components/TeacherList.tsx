@@ -25,7 +25,7 @@ const TeacherList: React.FC<TeacherListProps & MappedActions<typeof actions>> = 
         try {
           await actions.fetchTeachers()
         } catch (e) {
-          console.log(e)
+          console.error(e)
         }
       };
       fetchTeachers();

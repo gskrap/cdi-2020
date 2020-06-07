@@ -4,11 +4,14 @@ import {
   FETCH_DANCE_CLASSES,
   FETCH_DANCE_CLASSES_FAIL,
   FETCH_DANCE_CLASSES_SUCCESS,
-  FETCH_TEACHERS, FETCH_TEACHERS_FAIL, FETCH_TEACHERS_SUCCESS,
+  FETCH_TEACHERS,
+  FETCH_TEACHERS_FAIL,
+  FETCH_TEACHERS_SUCCESS,
   FetchDanceClassesAction,
   FetchDanceClassesFailAction,
   FetchDanceClassesSuccessAction,
-  FetchTeachersAction, FetchTeachersFailAction,
+  FetchTeachersAction,
+  FetchTeachersFailAction,
   FetchTeachersSuccessAction,
   LOG_IN_FAIL,
   LOG_IN_REQUEST,
@@ -42,7 +45,7 @@ export default (dispatch: Dispatch) => ({
         }, TIMEOUT)
       } catch (e) {
         dispatch<LogInFailAction>({type: LOG_IN_FAIL});
-        console.log(e);
+        console.error(e);
       }
     },
 
@@ -58,7 +61,7 @@ export default (dispatch: Dispatch) => ({
         }, TIMEOUT);
       } catch (e) {
         dispatch<LogInFailAction>({type: LOG_IN_FAIL});
-        console.log(e);
+        console.error(e);
       }
     },
 
@@ -73,7 +76,7 @@ export default (dispatch: Dispatch) => ({
         }, TIMEOUT);
       } catch (e) {
         dispatch<LogOutFailAction>({type: LOG_OUT_FAIL});
-        console.log(e);
+        console.error(e);
       }
     },
 
@@ -90,7 +93,17 @@ export default (dispatch: Dispatch) => ({
         }, TIMEOUT);
       } catch (e) {
         dispatch<FetchDanceClassesFailAction>({type: FETCH_DANCE_CLASSES_FAIL});
-        console.log(e);
+        console.error(e);
+      }
+    },
+
+    async deleteDanceClass(danceClassId: number, cb?: () => void) {
+      try {
+        await API.delete(`/dance_classes/${danceClassId}`);
+        this.fetchDanceClasses();
+        if (cb) cb();
+      } catch (e) {
+        console.error(e);
       }
     },
 
@@ -107,7 +120,7 @@ export default (dispatch: Dispatch) => ({
         }, TIMEOUT);
       } catch (e) {
         dispatch<FetchTeachersFailAction>({type: FETCH_TEACHERS_FAIL});
-        console.log(e);
+        console.error(e);
       }
     },
   },

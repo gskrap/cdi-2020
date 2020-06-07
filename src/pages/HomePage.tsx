@@ -24,7 +24,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
         try {
           await actions.fetchPermissions()
         } catch (e) {
-          console.log(e)
+          console.error(e)
         }
       };
       fetchPermissions();

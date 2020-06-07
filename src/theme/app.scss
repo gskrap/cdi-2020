@@ -31,6 +31,16 @@
   }
 }
 
+.edit-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 12px;
+}
+
+.teacher-name {
+  margin: auto 0 auto 16px;
+}
+
 .time-bubble {
   height: 100px;
   width: 100px;
@@ -50,10 +60,6 @@
     left: 48px;
     z-index: 0;
   }
-}
-
-.teacher-name {
-  margin: auto 0 auto 16px;
 }
 
 // END OTHER SECTION

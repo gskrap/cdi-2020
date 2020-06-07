@@ -5,17 +5,19 @@ import {AppState} from '../store/defaultStore';
 import {DanceClass} from '../models/DanceClass';
 import Loader from './Loader';
 import DanceClassCard from './DanceClassCard';
+import {IonToast} from '@ionic/react';
 
 type DanceClassListProps = {
-  loading: boolean,
   danceClasses: DanceClass[] | null,
+  loading: boolean,
 }
 
 const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof actions>> = ({
-  loading,
   danceClasses,
+  loading,
   actions,
 }) => {
+  const [showDeleteToast, setShowDeleteToast] = React.useState(false);
   const [triggerActive, setTriggerActive] = React.useState(false);
   const [loaded, setLoaded] = React.useState(!!danceClasses);
 
@@ -24,7 +26,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
       try {
         await actions.fetchDanceClasses()
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     };
     fetchDanceClasses();
@@ -44,16 +46,23 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
     <>
       {!loaded && <Loader fadeTrigger={!loading}/>}
       {loaded && danceClasses && danceClasses.map((danceClass, i) => (
-        <DanceClassCard key={i} danceClass={danceClass}/>
+        <DanceClassCard key={i} danceClass={danceClass} showToast={() => setShowDeleteToast(true)}/>
       ))}
+      <IonToast
+        isOpen={showDeleteToast}
+        onDidDismiss={() => setShowDeleteToast(false)}
+        message="Dance Class Deleted"
+        position="bottom"
+        duration={1200}
+      />
     </>
   )
 };
 
 const mapState = (state: AppState) => {
   return {
-    loading: state.danceClassesLoading,
     danceClasses: state.danceClasses,
+    loading: state.danceClassesLoading,
   }
 };
 
