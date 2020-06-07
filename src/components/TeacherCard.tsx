@@ -1,5 +1,5 @@
 import React from 'react';
-import {IonIcon} from '@ionic/react';
+import {IonIcon, IonItem} from '@ionic/react';
 import {User} from '../models/User';
 import {bodyOutline} from 'ionicons/icons';
 
@@ -11,9 +11,9 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
   const { first_name, last_name } = teacher;
 
   return (
-    <div className='fdr mvxxxxl mhs'>
+    <IonItem className='fdr mvxxxxl mhs' routerLink={`/teachers/${teacher.id}`} routerDirection='forward' lines='none'>
       <div className='flex1 fdr'>
-        <div className='plxl fdc fjc'>
+        <div className='fdc fjc'>
           <div className='profile-bubble'>
             <IonIcon icon={bodyOutline}/>
           </div>
@@ -24,7 +24,7 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
           <span className='openSansExtraBold'>{last_name}</span>
         </div>
       </div>
-    </div>
+    </IonItem>
   )
 };
 

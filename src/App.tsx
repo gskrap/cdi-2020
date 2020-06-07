@@ -38,6 +38,7 @@ import './theme/app.scss';
 import {bodyOutline, logOutOutline} from 'ionicons/icons';
 import actions, {MappedActions} from './actions/actions';
 import {connect} from 'react-redux';
+import TeacherDetailsPage from './pages/TeacherDetailsPage';
 
 const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
   const handleLogOut = () => {
@@ -64,6 +65,7 @@ const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
         <IonRouterOutlet id='router'>
           <Route exact path='/' component={HomePage}/>
           <Route exact path='/teachers' component={TeachersPage}/>
+          <Route exact path='/teachers/:teacherId' component={TeacherDetailsPage}/>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
