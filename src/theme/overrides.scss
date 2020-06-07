@@ -45,6 +45,10 @@ ion-toast {
   --background: var(--ion-color-tertiary);
 }
 
+ion-toolbar {
+  --border-width: 0px !important;
+}
+
 ion-fab-button {
   --background: var(--ion-color-primary);
   --background-activated: var(--ion-color-primary);
@@ -59,6 +63,12 @@ ion-fab-list {
   margin: 0;
   left: -13px;
   top: 34px;
+}
+
+ion-refresher {
+  background: linear-gradient(180deg, #1f7582, #63497b);
+  padding-top: 30px;
+  padding-bottom: 200px;
 }
 
 .header-image {

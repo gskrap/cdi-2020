@@ -80,7 +80,7 @@ export default (dispatch: Dispatch) => ({
       }
     },
 
-    async fetchDanceClasses(prefix?: string) {
+    async fetchDanceClasses(prefix?: string, cb?: () => void) {
       dispatch<FetchDanceClassesAction>({type: FETCH_DANCE_CLASSES});
       try {
         const response = await API.get(`${prefix || ''}/dance_classes`);
@@ -89,7 +89,8 @@ export default (dispatch: Dispatch) => ({
           dispatch<FetchDanceClassesSuccessAction>({
             type: FETCH_DANCE_CLASSES_SUCCESS,
             payload: responseBody,
-          })
+          });
+          if (cb) cb();
         }, TIMEOUT);
       } catch (e) {
         dispatch<FetchDanceClassesFailAction>({type: FETCH_DANCE_CLASSES_FAIL});
