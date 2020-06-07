@@ -26,6 +26,10 @@ ion-card {
   margin: 16px;
 }
 
+ion-segment-button {
+  --indicator-color: var(--ion-color-primary);
+}
+
 ion-card-content {
   padding: 24px !important;
 }

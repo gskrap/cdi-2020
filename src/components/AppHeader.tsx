@@ -1,5 +1,5 @@
 import React from 'react';
-import {IonButtons, IonHeader, IonBackButton, IonMenuButton, IonTitle, IonToolbar} from '@ionic/react';
+import {IonButtons, IonHeader, IonBackButton, IonTitle, IonToolbar} from '@ionic/react';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import { menuController } from '@ionic/core';
@@ -16,11 +16,11 @@ const AppHeader: React.FC<AppHeaderProps> = ({ loggedIn, title }) => (
       <IonButtons slot='start'>
         <IonBackButton text=''></IonBackButton>
       </IonButtons>
-      <IonTitle>{title}</IonTitle>
+      <IonTitle className='openSansExtraBold'>{title}</IonTitle>
       {loggedIn && (
         <IonButtons slot='end'>
           <div onClick={() => menuController.open()} className='plxxxl'>
-            <img className='header-image' src='/assets/cdi-logo-white-small.png'/>
+            <img className='header-image' src='/assets/cdi-logo-white-small.png' alt='logo-small'/>
           </div>
         </IonButtons>
       )}

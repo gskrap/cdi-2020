@@ -1,6 +1,7 @@
 import React from 'react';
-import {IonCard, IonCardContent} from '@ionic/react';
+import {IonIcon} from '@ionic/react';
 import {User} from '../models/User';
+import {bodyOutline} from 'ionicons/icons';
 
 type TeacherCardProps = {
   teacher: User,
@@ -10,12 +11,20 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
   const { first_name, last_name } = teacher;
 
   return (
-    <IonCard>
-      <IonCardContent>
-        <span>{first_name}</span>
-        <span>{last_name}</span>
-      </IonCardContent>
-    </IonCard>
+    <div className='fdr mvxxxxl mhs'>
+      <div className='flex1 fdr'>
+        <div className='plxl fdc fjc'>
+          <div className='profile-bubble'>
+            <IonIcon icon={bodyOutline}/>
+          </div>
+        </div>
+        <div className='font18 teacher-name'>
+          <span className='openSansExtraBold'>{first_name}</span>
+          <span>&nbsp;</span>
+          <span className='openSansExtraBold'>{last_name}</span>
+        </div>
+      </div>
+    </div>
   )
 };
 

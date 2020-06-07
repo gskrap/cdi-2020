@@ -25,12 +25,10 @@ const UserLogIn: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
     <>
       <form>
         <IonItem mode='md'>
-          <IonLabel position='floating'>Email</IonLabel>
-          <IonInput onIonChange={updateEmail} type='email'></IonInput>
+          <IonInput placeholder='email' onIonChange={updateEmail} type='email'></IonInput>
         </IonItem>
         <IonItem mode='md'>
-          <IonLabel position='floating'>Password</IonLabel>
-          <IonInput onIonChange={updatePassword} type='password'></IonInput>
+          <IonInput placeholder='password' onIonChange={updatePassword} type='password'></IonInput>
         </IonItem>
       </form>
       <IonButton className='mtxxl' expand='block' onClick={() => actions.logIn(email, password)}>Log In</IonButton>

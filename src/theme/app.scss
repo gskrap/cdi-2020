@@ -18,4 +18,43 @@
   margin: 50% auto auto auto;
 }
 
+.profile-bubble {
+  height: 80px;
+  width: 80px;
+  border-radius: 50px;
+  background-color: var(--ion-color-primary);
+  margin: auto;
+  display: flex;
+  > ion-icon {
+    margin: auto;
+    font-size: 70px;
+  }
+}
+
+.time-bubble {
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--ion-color-primary);
+  position: relative;
+  z-index: 1;
+  &:before {
+    content: '';
+    height: 120px;
+    border-left: 3px dotted var(--ion-color-primary);
+    position: absolute;
+    bottom: 90px;
+    left: 48px;
+    z-index: 0;
+  }
+}
+
+.teacher-name {
+  margin: auto 0 auto 16px;
+}
+
 // END OTHER SECTION
