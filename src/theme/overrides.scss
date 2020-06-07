@@ -23,7 +23,7 @@ ion-card {
   --background: transparent;
   border-radius: 0;
   box-shadow: rgba(255, 255, 255, 0.16) 0 12px 56px;
-  margin: 16px;
+  margin: 8px 0;
 }
 
 ion-segment-button {
@@ -31,7 +31,7 @@ ion-segment-button {
 }
 
 ion-card-content {
-  padding: 24px !important;
+  padding: 16px !important;
 }
 
 .header-image {

@@ -21,15 +21,15 @@ const DanceClassCard: React.FC<DanceClassCardProps> = ({ danceClass }) => {
 
   return (
     <div className='fdr'>
-      <div className='flex1 fdc fjc'>
+      <div className='phxl fdc fjc'>
         <div className='time-bubble tac'>
           <div className='font14 openSansBold'><IonIcon className='prm' icon={timeOutline}/>{start}</div>
           <div className='font14 openSansBold'><IonIcon className='plm r180' icon={arrowUndoOutline}/>{end}</div>
         </div>
       </div>
-      <IonCard className='flex2'>
+      <IonCard className='flex1'>
         <IonCardContent>
-          <div className='openSansExtraBold font16 mbxl'>{name}</div>
+          <div className='openSansExtraBold font14 mbxl'>{name}</div>
           {location && <div className='mbxl'><IonIcon className='prm' icon={locationOutline}/>{location.name}</div>}
           {groups && (
             <div className='mbxl'>

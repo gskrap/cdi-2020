@@ -12,35 +12,32 @@ import { menuController } from '@ionic/core';
 import { IonReactRouter } from '@ionic/react-router';
 import HomePage from './pages/HomePage';
 import TeachersPage from './pages/TeachersPage';
+import TeacherDetailsPage from './pages/TeacherDetailsPage';
+import {bodyOutline, logOutOutline, settingsOutline} from 'ionicons/icons';
+import actions, {MappedActions} from './actions/actions';
+import {connect} from 'react-redux';
+import {AppState} from './store/defaultStore';
+import {UserRole} from './models/User';
 
-/* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-
-/* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
 import '@ionic/react/css/padding.css';
 import '@ionic/react/css/float-elements.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-
-/* Theme variables */
 import './theme/variables.scss';
-
-/* My Stylesheets */
 import './theme/app.scss';
+import AdminPage from './pages/AdminPage';
 
-import {bodyOutline, logOutOutline} from 'ionicons/icons';
-import actions, {MappedActions} from './actions/actions';
-import {connect} from 'react-redux';
-import TeacherDetailsPage from './pages/TeacherDetailsPage';
+type AppProps = {
+  userRole: UserRole | null;
+}
 
-const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
+const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, actions }) => {
   const handleLogOut = () => {
     actions.logOut();
     menuController.close();
@@ -52,6 +49,12 @@ const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
         <IonMenu side='end' contentId='router'>
           <IonList className='ptxxxl'>
             <h1 className='openSansExtraBold mlxl'>Menu</h1>
+            {userRole === UserRole.ADMIN && (
+              <IonItem className='pvl' routerLink='/admin' routerDirection='forward' onClick={() => menuController.close()}>
+                <span>Admin</span>
+                <IonIcon icon={settingsOutline} slot='end'/>
+              </IonItem>
+            )}
             <IonItem className='pvl' routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
               <span>Teachers</span>
               <IonIcon icon={bodyOutline} slot='end'/>
@@ -64,6 +67,7 @@ const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
         </IonMenu>
         <IonRouterOutlet id='router'>
           <Route exact path='/' component={HomePage}/>
+          <Route exact path='/admin' component={AdminPage}/>
           <Route exact path='/teachers' component={TeachersPage}/>
           <Route exact path='/teachers/:teacherId' component={TeacherDetailsPage}/>
         </IonRouterOutlet>
@@ -72,4 +76,9 @@ const App: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
   )
 };
 
-export default connect(null, actions)(App);
+const mapState = (state: AppState) => {
+  const userRole = state.currentUser && state.currentUser.role;
+  return { userRole }
+};
+
+export default connect(mapState, actions)(App);

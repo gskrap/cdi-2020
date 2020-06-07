@@ -11,7 +11,7 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
   const { first_name, last_name } = teacher;
 
   return (
-    <IonItem className='fdr mvxxxxl mhs' routerLink={`/teachers/${teacher.id}`} routerDirection='forward' lines='none'>
+    <IonItem className='fdr mvxxxxl' routerLink={`/teachers/${teacher.id}`} routerDirection='forward' lines='none'>
       <div className='flex1 fdr'>
         <div className='fdc fjc'>
           <div className='profile-bubble'>

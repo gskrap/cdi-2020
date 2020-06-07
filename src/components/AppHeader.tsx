@@ -19,7 +19,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ loggedIn, title }) => (
       <IonTitle className='openSansExtraBold'>{title}</IonTitle>
       {loggedIn && (
         <IonButtons slot='end'>
-          <div onClick={() => menuController.open()} className='plxxxl'>
+          <div onClick={() => menuController.open()} className='plxxxl prs'>
             <img className='header-image' src='/assets/cdi-logo-white-small.png' alt='logo-small'/>
           </div>
         </IonButtons>

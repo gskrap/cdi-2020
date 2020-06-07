@@ -13,11 +13,11 @@ type TeacherDetailsPageProps = {
 
 const TeacherDetailsPage: React.FC<TeacherDetailsPageProps & RouteComponentProps> = ({ teacher, match }) => {
   return (
-    <IonPage id='teachers-page'>
+    <IonPage id='teacher-details-page'>
       <AppHeader title={teacher ? `${teacher.first_name} ${teacher.last_name}` : 'Teacher Details'}/>
       <IonContent>
         {teacher && (
-          <div className='paxxl'>
+          <div className='phxxl'>
             <p>{teacher.bio}</p>
           </div>
         )}
