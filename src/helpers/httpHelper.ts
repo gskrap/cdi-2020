@@ -1,5 +1,5 @@
-const apiUrl = 'https://cdi-api.herokuapp.com';
-//const apiUrl = 'http://localhost:3000';
+// const apiUrl = 'https://cdi-api.herokuapp.com';
+const apiUrl = 'http://localhost:3000';
 
 export const checkHttpResponse = (response: Response) => {
   if (response.ok) {

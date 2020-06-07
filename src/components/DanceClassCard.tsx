@@ -25,7 +25,7 @@ type DanceClassCardProps = {
 
 const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof actions>> = ({ danceClass, enableEdit, showToast, actions }) => {
   const [showDeleteWarning, setShowDeleteWarning] = React.useState(false);
-  const { end_time, groups, location, name, start_time, teacher, secondary_teacher } = danceClass;
+  const { end_time, groups, location_id, name, start_time, teachers } = danceClass;
   const start = moment(start_time).format('h:mm a');
   const end = moment(end_time).format('h:mm a');
 
@@ -84,19 +84,27 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
               </IonFab>
             )}
             <div className='openSansExtraBold font14 mbxl prxxxl'>{name}</div>
-            {location && <div className='mbxl'><IonIcon className='prm' icon={locationOutline}/>{location.name}</div>}
+            {location_id && <div className='mbxl'><IonIcon className='prm' icon={locationOutline}/>{location_id}</div>}
             {groups && (
               <div className='mbxl'>
                 {groups.map((group, i) => (
-                  <div className={i !== 0 ? 'padded20' : ''}>
+                  <div className={i !== 0 ? 'padded20' : ''} key={i}>
                     {i === 0 ? <IonIcon className='prm' icon={peopleCircleOutline}/> : null}
                     {group.name}
                   </div>
                 ))}
               </div>
             )}
-            {teacher && <div><IonIcon className='prm' icon={body}/>{`${teacher.first_name} ${teacher.last_name}`}</div>}
-            {secondary_teacher && <div className='padded20'>{`${secondary_teacher.first_name} ${secondary_teacher.last_name}`}</div>}
+            {teachers && (
+             <>
+               {teachers.map((teacher, i) => (
+                 <div className={i !== 0 ? 'padded20' : ''} key={i}>
+                   {i === 0 ? <IonIcon className='prm' icon={body}/> : null}
+                   {`${teacher.first_name} ${teacher.last_name}`}
+                 </div>
+               ))}
+             </>
+            )}
           </IonCardContent>
         </IonCard>
       </div>

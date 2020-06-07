@@ -27,7 +27,7 @@ import {
   LogOutSuccessAction
 } from './actionTypes';
 
-export const TIMEOUT = 500;
+export const TIMEOUT = 0;
 export type MappedActions<T extends (...args: any[]) => any> = ReturnType<T>;
 
 export default (dispatch: Dispatch) => ({

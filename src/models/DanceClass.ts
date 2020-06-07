@@ -1,5 +1,4 @@
 import {Group} from './Group';
-import {Location} from './Location';
 import {User} from './User';
 
 export interface DanceClass {
@@ -7,14 +6,9 @@ export interface DanceClass {
   end_time: string,
   groups: Group[],
   id: number,
-  location: Location,
   location_id: number,
   name: string,
   notes: string,
-  secondary_teacher: User,
-  secondary_teacher_id: number,
   start_time: string,
-  teacher: User,
-  teacher_id: number,
-  updated_at: string,
+  teachers: User[],
 }

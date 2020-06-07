@@ -6,29 +6,29 @@ import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import actions from '../actions/actions';
 import {DanceClass} from '../models/DanceClass';
+import {UserRole} from '../models/User';
+import DanceClassForm from '../components/DanceClassForm';
 
 type DanceClassDetailsPageProps = {
   danceClass: DanceClass;
+  userRole: UserRole | null;
 };
 
-const DanceClassDetailsPage: React.FC<DanceClassDetailsPageProps & RouteComponentProps> = ({ danceClass, match }) => {
-  return (
-    <IonPage id='dance-class-details-page'>
-      <AppHeader title={danceClass ? danceClass.name : 'Class Details'}/>
-      <IonContent>
-        {danceClass && (
-          <div className='phxxl'>
-            <p>{danceClass.name}</p>
-          </div>
-        )}
-      </IonContent>
-    </IonPage>
-  );
-};
+const DanceClassDetailsPage: React.FC<DanceClassDetailsPageProps & RouteComponentProps> = ({ danceClass, userRole, match }) => (
+  <IonPage id='dance-class-details-page'>
+    <AppHeader title="Edit Class"/>
+    <IonContent>
+      {userRole === UserRole.ADMIN && danceClass && (
+        <DanceClassForm danceClass={danceClass}/>
+      )}
+    </IonContent>
+  </IonPage>
+);
 
 const mapState = (state: AppState, props: { match: { params: { danceClassId: string } } }) => {
   const danceClass = (state.danceClasses || []).find(d => d.id === Number(props.match.params.danceClassId))!;
-  return { danceClass }
+  const userRole = state.currentUser && state.currentUser.role;
+  return { danceClass, userRole }
 };
 
 export default connect(mapState, actions)(DanceClassDetailsPage);
