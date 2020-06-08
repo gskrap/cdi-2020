@@ -1,5 +1,5 @@
-// const apiUrl = 'https://cdi-api.herokuapp.com';
-const apiUrl = 'http://localhost:3000';
+const apiUrl = 'https://cdi-api.herokuapp.com';
+// const apiUrl = 'http://localhost:3000';
 
 export const checkHttpResponse = (response: Response) => {
   if (response.ok) {
@@ -34,5 +34,15 @@ export const API = {
       },
       ...options,
     })
-  }
+  },
+  put(path: string, payload?: any, options = {}) {
+    return fetch(`${apiUrl}${path}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      ...options,
+    })
+  },
 };
