@@ -22,15 +22,14 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
 }) => {
   React.useEffect(() => {
     if (window.localStorage.getItem('auth_token')) {
-      const fetchPermissions = async () => {
-        try {
-          await actions.fetchPermissions()
-        } catch (e) {
-          console.error(e)
-        }
-      };
-      fetchPermissions();
+      actions.fetchPermissions().catch(e => {
+        console.error(e)
+      })
     }
+
+    actions.fetchGroups();
+    actions.fetchLocations();
+    actions.fetchTeachers();
   }, [actions]);
 
   const refresh = (event: CustomEvent<RefresherEventDetail>) => {

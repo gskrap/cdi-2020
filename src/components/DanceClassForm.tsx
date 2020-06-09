@@ -7,30 +7,49 @@ import actions, {MappedActions, TIMEOUT} from '../actions/actions';
 import {User} from '../models/User';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {useHistory} from 'react-router';
+import {StudentGroup} from '../models/StudentGroup';
+import {DanceClassLocation} from '../models/DanceClassLocation';
 
 type DanceClassFormProps = {
   danceClass?: DanceClass;
+  groups: StudentGroup[] | null;
+  locations: DanceClassLocation[] | null;
   teachers: User[] | null;
 };
 
-const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actions>> = ({ danceClass, teachers, actions }) => {
+const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actions>> = ({
+  danceClass,
+  groups,
+  locations,
+  teachers,
+  actions
+}) => {
   const history = useHistory();
 
   React.useEffect(() => {
-    if (!teachers) {
-      const fetchTeachers = async () => {
-        try {
-          await actions.fetchTeachers()
-        } catch (e) {
-          console.error(e)
-        }
-      };
-      fetchTeachers();
+    if (!groups) {
+      actions.fetchGroups().catch((e) => {
+        console.error(e);
+      });
     }
-  }, [teachers, actions]);
+
+    if (!locations) {
+      actions.fetchLocations().catch((e) => {
+        console.error(e);
+      });
+    }
+
+    if (!teachers) {
+      actions.fetchTeachers().catch((e) => {
+        console.error(e);
+      });
+    }
+  }, [groups, locations, teachers, actions]);
 
   const [name, setName] = React.useState(danceClass ? danceClass.name : '');
   const [notes, setNotes] = React.useState(danceClass ? danceClass.notes : '');
+  const [groupIds, setGroupIds] = React.useState(danceClass ? danceClass.groups.map(g => g.id) : []);
+  const [locationId, setLocationId] = React.useState(danceClass ? danceClass.location_id : 0);
   const [teacherIds, setTeacherIds] = React.useState(danceClass ? danceClass.teachers.map(t => t.id) : []);
 
   const handleSave = async () => {
@@ -45,9 +64,11 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
     const postBody = {
       dance_class: {
         ...strippedDanceClass,
+        location_id: locationId,
         name: name,
         notes: notes,
       },
+      group_ids: groupIds,
       teacher_ids: teacherIds,
     } ;
 
@@ -79,6 +100,24 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
         </IonItem>
 
         <IonItem>
+          <IonLabel position="floating">Groups</IonLabel>
+          <IonSelect value={groupIds} multiple={true} cancelText="Cancel" okText="OK" onIonChange={e => setGroupIds(e.detail.value)}>
+            {groups && groups.map((group, i) => (
+              <IonSelectOption key={i} value={group.id}>{group.name}</IonSelectOption>
+            ))}
+          </IonSelect>
+        </IonItem>
+
+        <IonItem>
+          <IonLabel position="floating">Location</IonLabel>
+          <IonSelect value={locationId} cancelText="Cancel" okText="OK" onIonChange={e => setLocationId(e.detail.value)}>
+            {locations && locations.map((location, i) => (
+              <IonSelectOption key={i} value={location.id}>{location.name}</IonSelectOption>
+            ))}
+          </IonSelect>
+        </IonItem>
+
+        <IonItem>
           <IonLabel position="floating">Notes</IonLabel>
           <IonTextarea value={notes} rows={4} onIonChange={e => setNotes(e.detail.value!)}></IonTextarea>
         </IonItem>
@@ -88,8 +127,8 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
   );
 };
 
-const mapState = (state: AppState) => {
-  return { teachers: state.teachers }
+const mapState = ({ groups, locations, teachers }: AppState) => {
+  return { groups, locations, teachers }
 };
 
 export default connect(mapState, actions)(DanceClassForm);

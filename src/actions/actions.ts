@@ -4,12 +4,24 @@ import {
   FETCH_DANCE_CLASSES,
   FETCH_DANCE_CLASSES_FAIL,
   FETCH_DANCE_CLASSES_SUCCESS,
+  FETCH_GROUPS,
+  FETCH_GROUPS_FAIL,
+  FETCH_GROUPS_SUCCESS,
+  FETCH_LOCATIONS,
+  FETCH_LOCATIONS_FAIL,
+  FETCH_LOCATIONS_SUCCESS,
   FETCH_TEACHERS,
   FETCH_TEACHERS_FAIL,
   FETCH_TEACHERS_SUCCESS,
   FetchDanceClassesAction,
   FetchDanceClassesFailAction,
   FetchDanceClassesSuccessAction,
+  FetchGroupsAction,
+  FetchGroupsFailAction,
+  FetchGroupsSuccessAction,
+  FetchLocationsAction,
+  FetchLocationsFailAction,
+  FetchLocationsSuccessAction,
   FetchTeachersAction,
   FetchTeachersFailAction,
   FetchTeachersSuccessAction,
@@ -104,6 +116,40 @@ export default (dispatch: Dispatch) => ({
         this.fetchDanceClasses();
         if (cb) cb();
       } catch (e) {
+        console.error(e);
+      }
+    },
+
+    async fetchGroups() {
+      dispatch<FetchGroupsAction>({type: FETCH_GROUPS});
+      try {
+        const response = await API.get('/groups');
+        const responseBody = await checkHttpResponse(response);
+        setTimeout(() => {
+          dispatch<FetchGroupsSuccessAction>({
+            type: FETCH_GROUPS_SUCCESS,
+            payload: responseBody,
+          })
+        }, TIMEOUT);
+      } catch (e) {
+        dispatch<FetchGroupsFailAction>({type: FETCH_GROUPS_FAIL});
+        console.error(e);
+      }
+    },
+
+    async fetchLocations() {
+      dispatch<FetchLocationsAction>({type: FETCH_LOCATIONS});
+      try {
+        const response = await API.get('/locations');
+        const responseBody = await checkHttpResponse(response);
+        setTimeout(() => {
+          dispatch<FetchLocationsSuccessAction>({
+            type: FETCH_LOCATIONS_SUCCESS,
+            payload: responseBody,
+          })
+        }, TIMEOUT);
+      } catch (e) {
+        dispatch<FetchLocationsFailAction>({type: FETCH_LOCATIONS_FAIL});
         console.error(e);
       }
     },

@@ -2,6 +2,11 @@ import {
   FETCH_DANCE_CLASSES,
   FETCH_DANCE_CLASSES_FAIL,
   FETCH_DANCE_CLASSES_SUCCESS,
+  FETCH_GROUPS,
+  FETCH_GROUPS_FAIL,
+  FETCH_GROUPS_SUCCESS,
+  FETCH_LOCATIONS,
+  FETCH_LOCATIONS_FAIL, FETCH_LOCATIONS_SUCCESS,
   FETCH_TEACHERS,
   FETCH_TEACHERS_FAIL,
   FETCH_TEACHERS_SUCCESS,
@@ -56,6 +61,38 @@ const reducers = (state: any, action: any) => {
         ...state,
         danceClasses: action.payload,
         danceClassesLoading: false,
+      };
+    case FETCH_GROUPS:
+      return {
+        ...state,
+        groupsLoading: true,
+      };
+    case FETCH_GROUPS_FAIL:
+      return {
+        ...state,
+        groupsLoading: false,
+      };
+    case FETCH_GROUPS_SUCCESS:
+      return {
+        ...state,
+        groups: action.payload,
+        groupsLoading: false,
+      };
+    case FETCH_LOCATIONS:
+      return {
+        ...state,
+        locationsLoading: true,
+      };
+    case FETCH_LOCATIONS_FAIL:
+      return {
+        ...state,
+        locationsLoading: false,
+      };
+    case FETCH_LOCATIONS_SUCCESS:
+      return {
+        ...state,
+        locations: action.payload,
+        locationsLoading: false,
       };
     case FETCH_TEACHERS:
       return {

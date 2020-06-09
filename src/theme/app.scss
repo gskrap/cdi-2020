@@ -54,9 +54,18 @@
   &:before {
     content: '';
     height: 78px;
-    border-left: 3px dotted var(--ion-color-primary);
+    border-left: 2px solid var(--ion-color-primary);
     position: absolute;
     bottom: 100px;
+    left: 48px;
+    z-index: 0;
+  }
+  &:after {
+    content: '';
+    height: 78px;
+    border-left: 2px solid var(--ion-color-primary);
+    position: absolute;
+    top: 100px;
     left: 48px;
     z-index: 0;
   }

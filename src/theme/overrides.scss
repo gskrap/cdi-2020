@@ -5,9 +5,13 @@
 
 .alert-wrapper {
   background: var(--ion-color-primary) !important;
-  .alert-title, .alert-message, .alert-checkbox-label {
+  .alert-title, .alert-message, .alert-checkbox-label, .alert-radio-label {
     color: var(--ion-color-primary-contrast) !important;
   }
+}
+
+.alert-radio-inner {
+  border-color: var(--ion-color-primary-contrast) !important;
 }
 
 ion-content {

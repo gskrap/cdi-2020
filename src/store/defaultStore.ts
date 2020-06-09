@@ -3,6 +3,8 @@ import {applyMiddleware, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {DanceClass} from '../models/DanceClass';
 import {User} from '../models/User';
+import {StudentGroup} from '../models/StudentGroup';
+import {DanceClassLocation} from '../models/DanceClassLocation';
 
 export type AppState = {
   logInLoading: boolean,
@@ -10,6 +12,10 @@ export type AppState = {
   currentUser: User | null,
   danceClasses: DanceClass[] | null,
   danceClassesLoading: boolean,
+  groups: StudentGroup[] | null,
+  groupsLoading: boolean,
+  locations: DanceClassLocation[] | null,
+  locationsLoading: boolean,
   teachers: User[] | null,
   teachersLoading: boolean,
 }
@@ -20,6 +26,10 @@ const initialState: AppState = {
   currentUser: null,
   danceClasses: null,
   danceClassesLoading: false,
+  groups: null,
+  groupsLoading: false,
+  locations: null,
+  locationsLoading: false,
   teachers: null,
   teachersLoading: false,
 };

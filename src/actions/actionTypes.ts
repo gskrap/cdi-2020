@@ -1,5 +1,7 @@
 import {User} from '../models/User';
 import {DanceClass} from '../models/DanceClass';
+import {DanceClassLocation} from '../models/DanceClassLocation';
+import {StudentGroup} from '../models/StudentGroup';
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_FAIL = 'LOG_IN_REQUEST_FAIL';
@@ -10,8 +12,14 @@ export const LOG_OUT_SUCCESS = 'LOG_OUT_REQUEST_SUCCESS';
 export const FETCH_DANCE_CLASSES = 'FETCH_DANCE_CLASSES';
 export const FETCH_DANCE_CLASSES_FAIL = 'FETCH_DANCE_CLASSES_FAIL';
 export const FETCH_DANCE_CLASSES_SUCCESS = 'FETCH_DANCE_CLASSES_SUCCESS';
+export const FETCH_GROUPS = 'FETCH_GROUPS';
+export const FETCH_GROUPS_FAIL = 'FETCH_GROUPS_FAIL';
+export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS';
+export const FETCH_LOCATIONS = 'FETCH_LOCATIONS';
+export const FETCH_LOCATIONS_FAIL = 'FETCH_LOCATIONS_FAIL';
+export const FETCH_LOCATIONS_SUCCESS = 'FETCH_LOCATIONS_SUCCESS';
 export const FETCH_TEACHERS = 'FETCH_TEACHERS';
-export const FETCH_TEACHERS_FAIL = 'FETCH_TFETCH_TEACHERS_FAILEACHERS';
+export const FETCH_TEACHERS_FAIL = 'FETCH_TEACHERS_FAIL';
 export const FETCH_TEACHERS_SUCCESS = 'FETCH_TEACHERS_SUCCESS';
 
 export interface LogInRequestAction {
@@ -53,6 +61,32 @@ export interface FetchDanceClassesFailAction {
 export interface FetchDanceClassesSuccessAction {
   type: typeof FETCH_DANCE_CLASSES_SUCCESS;
   payload: DanceClass[];
+}
+
+export interface FetchGroupsAction {
+  type: typeof FETCH_GROUPS;
+}
+
+export interface FetchGroupsFailAction {
+  type: typeof FETCH_GROUPS_FAIL;
+}
+
+export interface FetchGroupsSuccessAction {
+  type: typeof FETCH_GROUPS_SUCCESS;
+  payload: StudentGroup[];
+}
+
+export interface FetchLocationsAction {
+  type: typeof FETCH_LOCATIONS;
+}
+
+export interface FetchLocationsFailAction {
+  type: typeof FETCH_LOCATIONS_FAIL;
+}
+
+export interface FetchLocationsSuccessAction {
+  type: typeof FETCH_LOCATIONS_SUCCESS;
+  payload: DanceClassLocation[];
 }
 
 export interface FetchTeachersAction {

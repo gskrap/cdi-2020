@@ -25,7 +25,7 @@ type DanceClassCardProps = {
 
 const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof actions>> = ({ danceClass, enableEdit, showToast, actions }) => {
   const [showDeleteWarning, setShowDeleteWarning] = React.useState(false);
-  const { end_time, groups, location_id, name, start_time, teachers } = danceClass;
+  const { end_time, groups, location, name, start_time, teachers } = danceClass;
   const start = moment(start_time).format('h:mm a');
   const end = moment(end_time).format('h:mm a');
 
@@ -84,7 +84,7 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
               </IonFab>
             )}
             <div className='openSansExtraBold font14 mbxl prxxxl'>{name}</div>
-            {location_id && <div className='mbxl'><IonIcon className='prm' icon={locationOutline}/>{location_id}</div>}
+            {location && <div className='mbxl'><IonIcon className='prm' icon={locationOutline}/>{location.name}</div>}
             {groups && (
               <div className='mbxl'>
                 {groups.map((group, i) => (
