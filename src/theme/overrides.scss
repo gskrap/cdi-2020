@@ -11,17 +11,21 @@
 }
 
 .picker-wrapper {
-  background: var(--ion-color-primary) !important;
-  .picker-button {
-    color: var(--ion-color-primary-contrast)!important;
+  .picker-opt {
+    color: black !important;
   }
-  .picker-above-highlight {
-    background: linear-gradient(to top, var(--ion-color-secondary) 1%, rgba(0, 0, 0, 0.2) 100%);
 
-  }
-  .picker-below-highlight {
-    background: linear-gradient(to bottom, var(--ion-color-secondary) 1%, rgba(0, 0, 0, 0.2) 100%);
-  }
+  //background: var(--ion-color-primary) !important;
+  //.picker-button {
+  //  color: var(--ion-color-primary-contrast)!important;
+  //}
+  //.picker-above-highlight {
+  //  background: linear-gradient(to top, var(--ion-color-secondary) 1%, rgba(0, 0, 0, 0.2) 100%);
+  //
+  //}
+  //.picker-below-highlight {
+  //  background: linear-gradient(to bottom, var(--ion-color-secondary) 1%, rgba(0, 0, 0, 0.2) 100%);
+  //}
 }
 
 .alert-radio-inner {
