@@ -1,6 +1,16 @@
 import React from 'react';
 import {DanceClass} from '../models/DanceClass';
-import {IonButton, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTextarea} from '@ionic/react';
+import {
+  IonButton,
+  IonDatetime,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea
+} from '@ionic/react';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import actions, {MappedActions, TIMEOUT} from '../actions/actions';
@@ -9,6 +19,7 @@ import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {useHistory} from 'react-router';
 import {StudentGroup} from '../models/StudentGroup';
 import {DanceClassLocation} from '../models/DanceClassLocation';
+import moment from 'moment';
 
 type DanceClassFormProps = {
   danceClass?: DanceClass;
@@ -46,8 +57,15 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
     }
   }, [groups, locations, teachers, actions]);
 
+  const dateMoment = danceClass ? moment(danceClass.start_time) : moment();
+  const startTimeMoment = dateMoment.clone();
+  const endTimeMoment = danceClass ? moment(danceClass.end_time) : moment();
+
   const [name, setName] = React.useState(danceClass ? danceClass.name : '');
   const [notes, setNotes] = React.useState(danceClass ? danceClass.notes : '');
+  const [date, setDate] = React.useState(dateMoment.format());
+  const [startTime, setStartTime] = React.useState(startTimeMoment.format());
+  const [endTime, setEndTime] = React.useState(endTimeMoment.format());
   const [groupIds, setGroupIds] = React.useState(danceClass ? danceClass.groups.map(g => g.id) : []);
   const [locationId, setLocationId] = React.useState(danceClass ? danceClass.location_id : 0);
   const [teacherIds, setTeacherIds] = React.useState(danceClass ? danceClass.teachers.map(t => t.id) : []);
@@ -61,12 +79,22 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
       notes: danceClass ? danceClass.notes : null,
     };
 
+    const start_time = moment(date)
+      .hour(moment(startTime).hour())
+      .minute(moment(startTime).minute());
+
+    const end_time = moment(date)
+      .hour(moment(endTime).hour())
+      .minute(moment(endTime).minute());
+
     const postBody = {
       dance_class: {
         ...strippedDanceClass,
         location_id: locationId,
         name: name,
         notes: notes,
+        start_time,
+        end_time,
       },
       group_ids: groupIds,
       teacher_ids: teacherIds,
@@ -84,11 +112,28 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
 
   return (
     <div className='fdc fjb height100'>
-      <IonList>
+      <IonList className="prxxl">
         <IonItem>
           <IonLabel position="floating">Class Name</IonLabel>
           <IonInput value={name} onIonChange={e => setName(e.detail.value!)}></IonInput>
         </IonItem>
+
+        <IonItem>
+          <IonLabel position="floating">Date</IonLabel>
+          <IonDatetime displayFormat="MMM D YYYY" min="2000-06-01" max="2021-12-25" value={date} onIonChange={e => setDate(e.detail.value!)}></IonDatetime>
+        </IonItem>
+
+        <div className="fdr">
+          <IonItem className="flex1 ">
+            <IonLabel position="floating">Start Time</IonLabel>
+            <IonDatetime displayFormat="hh:mm a" value={startTime} onIonChange={e => setStartTime(e.detail.value!)}></IonDatetime>
+          </IonItem>
+
+          <IonItem className="flex1 ion-no-padding">
+            <IonLabel position="floating">End Time</IonLabel>
+            <IonDatetime displayFormat="hh:mm a" value={endTime} onIonChange={e => setEndTime(e.detail.value!)}></IonDatetime>
+          </IonItem>
+        </div>
 
         <IonItem>
           <IonLabel position="floating">Teachers</IonLabel>

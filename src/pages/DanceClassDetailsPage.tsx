@@ -17,7 +17,7 @@ type DanceClassDetailsPageProps = {
 const DanceClassDetailsPage: React.FC<DanceClassDetailsPageProps & RouteComponentProps> = ({ danceClass, userRole, match }) => (
   <IonPage id='dance-class-details-page'>
     <AppHeader title="Edit Class"/>
-    <IonContent>
+    <IonContent forceOverscroll={false}>
       {userRole === UserRole.ADMIN && danceClass && (
         <DanceClassForm danceClass={danceClass}/>
       )}
