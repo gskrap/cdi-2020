@@ -214,7 +214,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
       </IonList>
       <IonFooter>
         <IonToolbar>
-          <IonButton expand='block' onClick={handleSave}>Save Class</IonButton>
+          <IonButton className='border-medium' expand='block' onClick={handleSave}>Save Class</IonButton>
         </IonToolbar>
       </IonFooter>
     </div>
