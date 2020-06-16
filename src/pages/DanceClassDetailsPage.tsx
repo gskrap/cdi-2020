@@ -9,14 +9,14 @@ import {DanceClass} from '../models/DanceClass';
 import {UserRole} from '../models/User';
 import DanceClassForm from '../components/DanceClassForm';
 
-type DanceClassDetailsPageProps = {
+interface DanceClassDetailsPageProps {
   danceClass: DanceClass;
   userRole: UserRole | null;
-};
+}
 
 const DanceClassDetailsPage: React.FC<DanceClassDetailsPageProps & RouteComponentProps> = ({ danceClass, userRole, match }) => (
   <IonPage id='dance-class-details-page'>
-    <AppHeader title="Edit Class"/>
+    <AppHeader title='Edit Class' />
     <IonContent forceOverscroll={false}>
       {userRole === UserRole.ADMIN && danceClass && (
         <DanceClassForm danceClass={danceClass}/>
