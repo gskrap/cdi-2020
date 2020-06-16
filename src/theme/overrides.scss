@@ -40,6 +40,10 @@ ion-menu {
   --background: linear-gradient(180deg, #1f7582, #414d79, #63497b);
 }
 
+ion-toolbar {
+  --background: var(--ion-color-secondary);
+}
+
 ion-item {
   --background: transparent;
 }

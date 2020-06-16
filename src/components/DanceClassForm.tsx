@@ -3,13 +3,15 @@ import {DanceClass} from '../models/DanceClass';
 import {
   IonButton,
   IonDatetime,
+  IonFooter,
   IonInput,
   IonItem,
   IonLabel,
   IonList,
   IonSelect,
   IonSelectOption,
-  IonTextarea
+  IonTextarea,
+  IonToolbar
 } from '@ionic/react';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
@@ -210,7 +212,11 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
           <IonTextarea value={notes} rows={4} onIonChange={e => setNotes(e.detail.value!)} />
         </IonItem>
       </IonList>
-      <IonButton expand='block' onClick={handleSave}>Save Class</IonButton>
+      <IonFooter>
+        <IonToolbar>
+          <IonButton expand='block' onClick={handleSave}>Save Class</IonButton>
+        </IonToolbar>
+      </IonFooter>
     </div>
   );
 };
