@@ -34,6 +34,7 @@ import './theme/app.scss';
 import DanceClassDetailsPage from './pages/DanceClassDetailsPage';
 import DanceClassCreatePage from './pages/DanceClassCreatePage';
 import UsersPage from './pages/UsersPage';
+import UserDetailsPage from './pages/UserDetailsPage';
 
 type AppProps = {
   userRole: UserRole | null;
@@ -81,6 +82,7 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
           <Route exact path='/teachers' component={TeachersPage}/>
           <Route exact path='/teachers/:teacherId' component={TeacherDetailsPage}/>
           <Route exact path='/users' component={UsersPage}/>
+          <Route exact path='/users/:userId' component={UserDetailsPage}/>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
