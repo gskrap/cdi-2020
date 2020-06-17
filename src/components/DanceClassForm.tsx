@@ -15,7 +15,7 @@ import {
 } from '@ionic/react';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
-import actions, {MappedActions, TIMEOUT} from '../actions/actions';
+import actions, {MappedActions} from '../actions/actions';
 import {User} from '../models/User';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {useHistory} from 'react-router';

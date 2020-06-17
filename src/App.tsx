@@ -13,7 +13,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import HomePage from './pages/HomePage';
 import TeachersPage from './pages/TeachersPage';
 import TeacherDetailsPage from './pages/TeacherDetailsPage';
-import {body, createOutline, logOutOutline, settingsOutline} from 'ionicons/icons';
+import {body, createOutline, logOutOutline, peopleOutline} from 'ionicons/icons';
 import actions, {MappedActions} from './actions/actions';
 import {connect} from 'react-redux';
 import {AppState} from './store/defaultStore';
@@ -33,6 +33,7 @@ import './theme/variables.scss';
 import './theme/app.scss';
 import DanceClassDetailsPage from './pages/DanceClassDetailsPage';
 import DanceClassCreatePage from './pages/DanceClassCreatePage';
+import UsersPage from './pages/UsersPage';
 
 type AppProps = {
   userRole: UserRole | null;
@@ -62,6 +63,10 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
           {userRole === UserRole.ADMIN && (
             <IonList className='mbxxxxl'>
               <h1 className='openSansExtraBold mlxl'>Admin Menu</h1>
+              <IonItem className='pvl' routerLink='/users' routerDirection='forward' onClick={() => menuController.close()}>
+                <span>Users</span>
+                <IonIcon icon={peopleOutline} slot='end'/>
+              </IonItem>
               <IonItem className='pvl' routerLink='/danceClasses/new' routerDirection='forward' onClick={() => menuController.close()}>
                 <span>Create Class</span>
                 <IonIcon icon={createOutline} slot='end'/>
@@ -75,6 +80,7 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
           <Route exact path='/danceClasses/:danceClassId/edit' component={DanceClassDetailsPage}/>
           <Route exact path='/teachers' component={TeachersPage}/>
           <Route exact path='/teachers/:teacherId' component={TeacherDetailsPage}/>
+          <Route exact path='/users' component={UsersPage}/>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

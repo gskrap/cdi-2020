@@ -18,8 +18,6 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
   actions,
 }) => {
   const [showDeleteToast, setShowDeleteToast] = React.useState(false);
-  const [triggerActive, setTriggerActive] = React.useState(false);
-  const [loaded, setLoaded] = React.useState(!!danceClasses);
 
   React.useEffect(() => {
     const fetchDanceClasses = async () => {
@@ -32,20 +30,10 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
     fetchDanceClasses();
   }, [actions]);
 
-  React.useEffect(() => {
-    if (loading) {
-      setTriggerActive(true);
-    } else if (triggerActive) {
-      setTimeout(() => {
-        setLoaded(true);
-      }, 500);
-    }
-  }, [loading, triggerActive]);
-
   return (
     <>
-      {!loaded && <Loader fadeTrigger={!loading}/>}
-      {loaded && danceClasses && danceClasses.map((danceClass, i) => (
+      {loading && <Loader/>}
+      {!loading && danceClasses && danceClasses.map((danceClass, i) => (
         <DanceClassCard key={i} danceClass={danceClass} showToast={() => setShowDeleteToast(true)}/>
       ))}
       <IonToast

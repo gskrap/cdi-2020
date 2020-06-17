@@ -1,6 +1,6 @@
 import React from 'react';
 import {User} from '../models/User';
-import TeacherCard from './TeacherCard';
+import UserCard from './UserCard';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
@@ -16,9 +16,6 @@ const TeacherList: React.FC<TeacherListProps & MappedActions<typeof actions>> = 
   teachers,
   actions,
 }) => {
-  const [triggerActive, setTriggerActive] = React.useState(false);
-  const [loaded, setLoaded] = React.useState(!!teachers);
-
   React.useEffect(() => {
     if (!teachers) {
       const fetchTeachers = async () => {
@@ -32,21 +29,11 @@ const TeacherList: React.FC<TeacherListProps & MappedActions<typeof actions>> = 
     }
   }, [teachers, actions]);
 
-  React.useEffect(() => {
-    if (loading) {
-      setTriggerActive(true);
-    } else if (triggerActive) {
-      setTimeout(() => {
-        setLoaded(true);
-      }, 500);
-    }
-  }, [loading, triggerActive]);
-
   return (
     <>
-      {!loaded && <Loader fadeTrigger={!loading}/>}
-      {loaded && teachers && teachers.map((teacher, i) => (
-        <TeacherCard teacher={teacher} key={i}/>
+      {loading && <Loader/>}
+      {!loading && teachers && teachers.map((teacher, i) => (
+        <UserCard user={teacher} routerLink={`/teachers/${teacher.id}`} key={i}/>
       ))}
     </>
   )
