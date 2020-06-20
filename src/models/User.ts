@@ -11,6 +11,7 @@ export interface User {
   alumni: boolean;
   bio: string;
   archived: boolean;
+  password?: string;
 }
 
 export enum UserRole {

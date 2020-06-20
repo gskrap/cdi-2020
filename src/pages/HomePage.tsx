@@ -1,6 +1,6 @@
 import {IonContent, IonPage, IonRefresher, IonRefresherContent,} from '@ionic/react';
 import React from 'react';
-import UserLogIn from '../components/UserLogIn';
+import UserLogInRegisterFormContainer from '../components/UserLogInRegisterFormContainer';
 import {AppState} from '../store/defaultStore';
 import actions, {MappedActions} from '../actions/actions';
 import {connect} from 'react-redux';
@@ -39,7 +39,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
   return (
     <IonPage id='home-page'>
       <AppHeader title='Schedule'/>
-      <IonContent>
+      <IonContent forceOverscroll={false}>
         <IonRefresher slot="fixed" onIonRefresh={refresh}>
           <IonRefresherContent
             pullingIcon={chevronDownCircleOutline}
@@ -48,7 +48,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
           </IonRefresherContent>
         </IonRefresher>
         {loading && <Loader/>}
-        {!loading && !loggedIn && <UserLogIn/>}
+        {!loading && !loggedIn && <UserLogInRegisterFormContainer/>}
         {!loading && loggedIn && <DanceClassList/>}
       </IonContent>
     </IonPage>

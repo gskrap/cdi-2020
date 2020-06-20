@@ -38,6 +38,7 @@ import {
   LogOutRequestAction,
   LogOutSuccessAction
 } from './actionTypes';
+import {User} from '../models/User';
 
 export const TIMEOUT = 0;
 export type MappedActions<T extends (...args: any[]) => any> = ReturnType<T>;
@@ -55,6 +56,21 @@ export default (dispatch: Dispatch) => ({
             payload: responseBody,
           })
         }, TIMEOUT)
+      } catch (e) {
+        dispatch<LogInFailAction>({type: LOG_IN_FAIL});
+        console.error(e);
+      }
+    },
+
+    async register(user: Partial<User>) {
+      dispatch<LogInRequestAction>({type: LOG_IN_REQUEST});
+      try {
+        const response = await API.post('/users', { user });
+        const responseBody = await checkHttpResponse(response);
+        setTimeout(() => {
+          window.localStorage.setItem('auth_token', responseBody.auth_token);
+          this.fetchPermissions();
+        }, TIMEOUT);
       } catch (e) {
         dispatch<LogInFailAction>({type: LOG_IN_FAIL});
         console.error(e);
