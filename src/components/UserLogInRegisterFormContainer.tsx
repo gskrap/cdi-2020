@@ -29,12 +29,10 @@ const UserLogInRegisterFormContainer: React.FC<MappedActions<typeof actions>> = 
   const [lastName, setLastName] = React.useState('');
   const [dateOfBirth, setDateOfBirth] = React.useState('');
   const [phone, setPhone] = React.useState('');
-  const [alumni, setAlumni] = React.useState(false);
   const [gender, setGender] = React.useState();
 
   const handleRegister = () => {
     const user: Partial<User> = {
-      alumni,
       email,
       gender,
       password,
@@ -115,10 +113,6 @@ const UserLogInRegisterFormContainer: React.FC<MappedActions<typeof actions>> = 
             <IonSelectOption value={UserGender.MALE}>male</IonSelectOption>
             <IonSelectOption value={UserGender.NOT_SPECIFIED}>other</IonSelectOption>
           </IonSelect>
-        </IonItem>
-        <IonItem className="ion-no-padding ptxl">
-          <IonLabel>Alumni?</IonLabel>
-          <IonCheckbox checked={alumni} onIonChange={e => setAlumni(e.detail.checked)} mode="md"/>
         </IonItem>
       </form>
       <IonButton className='mtxxl' expand='block' onClick={handleRegister}>Register</IonButton>
