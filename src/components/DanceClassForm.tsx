@@ -62,7 +62,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
   // @ts-ignore
   const startMomentRounded = moment().roundNext15Min();
   const dateMoment = danceClass ? moment(danceClass.start_time) : startMomentRounded.clone();
-  const startTimeMoment = startMomentRounded.clone();
+  const startTimeMoment = danceClass ? moment(danceClass.start_time) : startMomentRounded.clone();
   const endTimeMoment = danceClass ? moment(danceClass.end_time) : startMomentRounded.clone();
 
   const [name, setName] = React.useState(danceClass ? danceClass.name : '');
