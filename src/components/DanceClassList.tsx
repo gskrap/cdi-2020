@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import actions, {MappedActions} from '../actions/actions';
 import {connect} from 'react-redux';
 import {AppState} from '../store/defaultStore';
@@ -7,6 +7,7 @@ import {DanceClass} from '../models/DanceClass';
 import Loader from './Loader';
 import DanceClassCard from './DanceClassCard';
 import {IonItemDivider, IonToast} from '@ionic/react';
+import {LOCATION_TIMEZONE} from '../constants/settingsConstants';
 
 type DanceClassListProps = {
   danceClasses: DanceClass[] | null,
@@ -35,7 +36,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
   React.useEffect(() => {
     if (danceClasses) {
       const breakdown = danceClasses.reduce((rv, x) => {
-        const key = moment(x.start_time).format('dddd, MMMM D');
+        const key = moment(x.start_time).tz(LOCATION_TIMEZONE).format('dddd, MMMM D');
         // @ts-ignore
         (rv[key] = rv[key] || []).push(x);
         return rv;
