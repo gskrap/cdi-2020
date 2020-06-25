@@ -52,10 +52,12 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
         <IonMenu side='end' contentId='router'>
           <IonList className='ptxxxl'>
             <h1 className='openSansExtraBold mlxl'>Menu</h1>
-            <IonItem className='pvl' routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
-              <span>Teachers</span>
-              <IonIcon icon={body} slot='end'/>
-            </IonItem>
+            {userRole === UserRole.ADMIN && (
+              <IonItem className='pvl' routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
+                <span>Teachers</span>
+                <IonIcon icon={body} slot='end'/>
+              </IonItem>
+            )}
             <IonItem className='pvl' routerLink='/' routerDirection='root' onClick={handleLogOut}>
               <span>Log Out</span>
               <IonIcon icon={logOutOutline} slot='end'/>

@@ -16,16 +16,24 @@ import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
 import {UserRole} from '../models/User';
+import {StudentGroup} from '../models/StudentGroup';
 
 type DanceClassCardProps = {
   danceClass: DanceClass,
   enableEdit: boolean,
+  availableGroups: StudentGroup[] | null,
   showToast: () => void,
 };
 
-const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof actions>> = ({ danceClass, enableEdit, showToast, actions }) => {
+const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof actions>> = ({
+  danceClass,
+  enableEdit,
+  availableGroups,
+  showToast,
+  actions
+}) => {
   const [showDeleteWarning, setShowDeleteWarning] = React.useState(false);
-  const { end_time, groups, location, name, start_time, teachers } = danceClass;
+  const { end_time, groups, location, name, start_time, teachers, notes } = danceClass;
   const start = moment(start_time).format('h:mm a');
   const end = moment(end_time).format('h:mm a');
 
@@ -38,6 +46,8 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
       console.error(e);
     }
   };
+
+  const shouldDisplayGroups = availableGroups ? groups.length < availableGroups.length : true;
 
   return (
     <>
@@ -85,7 +95,7 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
             )}
             <div className='openSansExtraBold font14 mbxl prxxxl'>{name}</div>
             {location && <div className='mbxl'><IonIcon className='prm' icon={locationOutline}/>{location.name}</div>}
-            {groups && (
+            {shouldDisplayGroups && (
               <div className='mbxl'>
                 {groups.map((group, i) => (
                   <div className={i !== 0 ? 'padded20' : ''} key={i}>
@@ -105,6 +115,9 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
                ))}
              </>
             )}
+            {notes && (
+              <div className='cardNotes mtxl'>{notes}</div>
+            )}
           </IonCardContent>
         </IonCard>
       </div>
@@ -114,7 +127,10 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
 
 const mapState = (state: AppState) => {
   const enableEdit = Boolean(state.currentUser && state.currentUser.role === UserRole.ADMIN);
-  return { enableEdit };
+  return {
+    enableEdit,
+    availableGroups: state.groups,
+  };
 };
 
 export default connect(mapState, actions)(DanceClassCard);

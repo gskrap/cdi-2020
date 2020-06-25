@@ -40,13 +40,15 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
     <IonPage id='home-page'>
       <AppHeader title='Schedule'/>
       <IonContent forceOverscroll={false}>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
-          <IonRefresherContent
-            pullingIcon={chevronDownCircleOutline}
-            refreshingSpinner="circles"
-          >
-          </IonRefresherContent>
-        </IonRefresher>
+        {loggedIn &&  (
+          <IonRefresher slot="fixed" onIonRefresh={refresh}>
+            <IonRefresherContent
+              pullingIcon={chevronDownCircleOutline}
+              refreshingSpinner="circles"
+            >
+            </IonRefresherContent>
+          </IonRefresher>
+        )}
         {loading && <Loader/>}
         {!loading && !loggedIn && <UserLogInRegisterFormContainer/>}
         {!loading && loggedIn && <DanceClassList/>}

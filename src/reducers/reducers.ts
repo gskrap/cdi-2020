@@ -61,6 +61,7 @@ const reducers = (state: any, action: any) => {
         ...state,
         danceClasses: action.payload,
         danceClassesLoading: false,
+        danceClassesLoaded: true,
       };
     case FETCH_GROUPS:
       return {

@@ -1,11 +1,12 @@
 import React from 'react';
+import moment from 'moment';
 import actions, {MappedActions} from '../actions/actions';
 import {connect} from 'react-redux';
 import {AppState} from '../store/defaultStore';
 import {DanceClass} from '../models/DanceClass';
 import Loader from './Loader';
 import DanceClassCard from './DanceClassCard';
-import {IonToast} from '@ionic/react';
+import {IonItemDivider, IonToast} from '@ionic/react';
 
 type DanceClassListProps = {
   danceClasses: DanceClass[] | null,
@@ -17,6 +18,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
   loading,
   actions,
 }) => {
+  const [groupedDanceClasses, setGroupedDanceClasses] = React.useState<{ [key: string]: DanceClass[]}>({});
   const [showDeleteToast, setShowDeleteToast] = React.useState(false);
 
   React.useEffect(() => {
@@ -30,11 +32,28 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
     fetchDanceClasses();
   }, [actions]);
 
+  React.useEffect(() => {
+    if (danceClasses) {
+      const breakdown = danceClasses.reduce((rv, x) => {
+        const key = moment(x.start_time).format('dddd, MMMM D');
+        // @ts-ignore
+        (rv[key] = rv[key] || []).push(x);
+        return rv;
+      }, {});
+      setGroupedDanceClasses(breakdown);
+    }
+  }, [danceClasses]);
+
   return (
     <>
       {loading && <Loader/>}
-      {!loading && danceClasses && danceClasses.map((danceClass, i) => (
-        <DanceClassCard key={i} danceClass={danceClass} showToast={() => setShowDeleteToast(true)}/>
+      {groupedDanceClasses && Object.keys(groupedDanceClasses).map((date, i) => (
+        <>
+          <IonItemDivider sticky>{date}</IonItemDivider>
+          {groupedDanceClasses[date as keyof typeof groupedDanceClasses].map((danceClass, j) => (
+            <DanceClassCard key={`${i}-${j}`} danceClass={danceClass} showToast={() => setShowDeleteToast(true)}/>
+          ))}
+        </>
       ))}
       <IonToast
         isOpen={showDeleteToast}
@@ -50,7 +69,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
 const mapState = (state: AppState) => {
   return {
     danceClasses: state.danceClasses,
-    loading: state.danceClassesLoading,
+    loading: state.danceClassesLoading && !state.danceClassesLoaded,
   }
 };
 
