@@ -6,16 +6,20 @@
 
 // UTILITY SECTION
 
-.border-medium {
-  border: 1px solid var(--ion-color-medium);
-}
-
 .border-radius {
   border-radius: 9px;
 }
 
+.box-shadow {
+  box-shadow: 0 12px 56px rgba(255, 255, 255, 0.16);
+}
+
 .height100 {
   height: 100%;
+}
+
+.yellow {
+  color: var(--ion-color-warning) !important;
 }
 
 // END UTILITY SECTION

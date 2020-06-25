@@ -120,7 +120,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
     <div className='fdc fjb height100'>
       <IonList className='prxxl'>
         <IonItem>
-          <IonLabel position='floating'>Class Name</IonLabel>
+          <IonLabel className='yellow' position='floating'>Class Name</IonLabel>
           <IonInput
             value={name}
             onIonChange={e => setName(e.detail.value!)}
@@ -128,7 +128,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
         </IonItem>
 
         <IonItem>
-          <IonLabel position='floating'>Date</IonLabel>
+          <IonLabel className='yellow' position='floating'>Date</IonLabel>
           <IonDatetime
             displayFormat='MMM D YYYY'
             min='2000-06-01'
@@ -140,7 +140,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
 
         <div className='fdr'>
           <IonItem className='flex1 '>
-            <IonLabel position='floating'>Start Time</IonLabel>
+            <IonLabel className='yellow' position='floating'>Start Time</IonLabel>
             <IonDatetime
               displayFormat='hh:mm a'
               minuteValues='0,15,30,45'
@@ -150,7 +150,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
           </IonItem>
 
           <IonItem className='flex1 ion-no-padding'>
-            <IonLabel position='floating'>End Time</IonLabel>
+            <IonLabel className='yellow' position='floating'>End Time</IonLabel>
             <IonDatetime
               displayFormat='hh:mm a'
               minuteValues='0,15,30,45'
@@ -161,7 +161,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
         </div>
 
         <IonItem>
-          <IonLabel position='floating'>Teachers</IonLabel>
+          <IonLabel className='yellow' position='floating'>Teachers</IonLabel>
           <IonSelect
             value={teacherIds}
             multiple={true}
@@ -177,7 +177,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
         </IonItem>
 
         <IonItem>
-          <IonLabel position='floating'>Groups</IonLabel>
+          <IonLabel className='yellow' position='floating'>Groups</IonLabel>
           <IonSelect
             value={groupIds}
             multiple={true}
@@ -193,7 +193,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
         </IonItem>
 
         <IonItem>
-          <IonLabel position='floating'>Location</IonLabel>
+          <IonLabel className='yellow' position='floating'>Location</IonLabel>
           <IonSelect
             value={locationId}
             cancelText='Cancel'
@@ -208,13 +208,13 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
         </IonItem>
 
         <IonItem>
-          <IonLabel position='floating'>Notes</IonLabel>
+          <IonLabel className='yellow' position='floating'>Notes</IonLabel>
           <IonTextarea value={notes} rows={4} onIonChange={e => setNotes(e.detail.value!)} />
         </IonItem>
       </IonList>
       <IonFooter>
         <IonToolbar>
-          <IonButton className='border-medium border-radius' expand='block' onClick={handleSave}>Save Class</IonButton>
+          <IonButton className='border-radius box-shadow' expand='block' onClick={handleSave}>Save Class</IonButton>
         </IonToolbar>
       </IonFooter>
     </div>
