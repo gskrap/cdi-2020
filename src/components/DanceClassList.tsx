@@ -48,12 +48,12 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
     <>
       {loading && <Loader/>}
       {groupedDanceClasses && Object.keys(groupedDanceClasses).map((date, i) => (
-        <>
+        <React.Fragment key={i}>
           <IonItemDivider sticky>{date}</IonItemDivider>
           {groupedDanceClasses[date as keyof typeof groupedDanceClasses].map((danceClass, j) => (
             <DanceClassCard key={`${i}-${j}`} danceClass={danceClass} showToast={() => setShowDeleteToast(true)}/>
           ))}
-        </>
+        </React.Fragment>
       ))}
       <IonToast
         isOpen={showDeleteToast}
