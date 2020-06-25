@@ -50,11 +50,11 @@ const UserLogInRegisterFormContainer: React.FC<MappedActions<typeof actions>> = 
     <>
       <form>
         <IonItem className="ion-no-padding">
-          <IonLabel position="floating">Email</IonLabel>
+          <IonLabel className='yellow' position='floating'>Email</IonLabel>
           <IonInput onIonChange={e => setEmail(e.detail.value!)} type='email'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
-          <IonLabel position="floating">Password</IonLabel>
+          <IonLabel className='yellow' position='floating'>Password</IonLabel>
           <IonInput onIonChange={e => setPassword(e.detail.value!)} type='password'></IonInput>
         </IonItem>
       </form>
@@ -66,27 +66,27 @@ const UserLogInRegisterFormContainer: React.FC<MappedActions<typeof actions>> = 
     <>
       <form>
         <IonItem className="ion-no-padding">
-          <IonLabel position="floating">Email</IonLabel>
+          <IonLabel className='yellow' position='floating'>Email</IonLabel>
           <IonInput onIonChange={e => setEmail(e.detail.value!)} type='email'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
-          <IonLabel position="floating">Password</IonLabel>
+          <IonLabel className='yellow' position='floating'>Password</IonLabel>
           <IonInput onIonChange={e => setPassword(e.detail.value!)} type='password'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
-          <IonLabel position="floating">Confirm Password</IonLabel>
+          <IonLabel className='yellow' position='floating'>Confirm Password</IonLabel>
           <IonInput onIonChange={e => setPasswordDupe(e.detail.value!)} type='password'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
-          <IonLabel position="floating">First Name</IonLabel>
+          <IonLabel className='yellow' position='floating'>First Name</IonLabel>
           <IonInput onIonChange={e => setFirstName(e.detail.value!)} type='text'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
-          <IonLabel position="floating">Last Name</IonLabel>
+          <IonLabel className='yellow' position='floating'>Last Name</IonLabel>
           <IonInput onIonChange={e => setLastName(e.detail.value!)} type='text'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
-          <IonLabel position='floating'>Birthday</IonLabel>
+          <IonLabel className='yellow' position='floating'>Birthday</IonLabel>
           <IonDatetime
             displayFormat='MMM D YYYY'
             min='1900-01-01'
@@ -96,11 +96,11 @@ const UserLogInRegisterFormContainer: React.FC<MappedActions<typeof actions>> = 
           />
         </IonItem>
         <IonItem className="ion-no-padding">
-          <IonLabel position="floating">Phone Number</IonLabel>
+          <IonLabel className='yellow' position='floating'>Phone Number</IonLabel>
           <IonInput onIonChange={e => setPhone(e.detail.value!)} type='tel'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
-          <IonLabel position='floating'>Gender</IonLabel>
+          <IonLabel className='yellow' position='floating'>Gender</IonLabel>
           <IonSelect
             value={gender}
             cancelText='Cancel'
