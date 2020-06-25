@@ -22,6 +22,7 @@ import {useHistory} from 'react-router';
 import {StudentGroup} from '../models/StudentGroup';
 import {DanceClassLocation} from '../models/DanceClassLocation';
 import moment from '../helpers/myMoment';
+import {LOCATION_TIMEZONE} from '../constants/settingsConstants';
 
 type DanceClassFormProps = {
   danceClass?: DanceClass;
@@ -135,6 +136,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
             max='2021-12-25'
             value={date}
             onIonChange={e => setDate(e.detail.value!)}
+            display-timezone={LOCATION_TIMEZONE}
           />
         </IonItem>
 
@@ -146,6 +148,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
               minuteValues='0,15,30,45'
               value={startTime}
               onIonChange={e => setStartTime(e.detail.value!)}
+              display-timezone={LOCATION_TIMEZONE}
             />
           </IonItem>
 
@@ -156,6 +159,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
               minuteValues='0,15,30,45'
               value={endTime}
               onIonChange={e => setEndTime(e.detail.value!)}
+              display-timezone={LOCATION_TIMEZONE}
             />
           </IonItem>
         </div>

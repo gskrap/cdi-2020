@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 // @ts-ignore
 moment.fn.roundNext15Min = function() {

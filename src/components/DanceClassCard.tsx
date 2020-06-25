@@ -1,7 +1,7 @@
 import {DanceClass} from '../models/DanceClass';
 import {IonAlert, IonCard, IonCardContent, IonFab, IonFabButton, IonFabList, IonIcon} from '@ionic/react';
 import React from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import {
   arrowUndoOutline,
   body,
@@ -17,6 +17,7 @@ import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
 import {UserRole} from '../models/User';
 import {StudentGroup} from '../models/StudentGroup';
+import {LOCATION_TIMEZONE} from '../constants/settingsConstants';
 
 type DanceClassCardProps = {
   danceClass: DanceClass,
@@ -34,8 +35,8 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
 }) => {
   const [showDeleteWarning, setShowDeleteWarning] = React.useState(false);
   const { end_time, groups, location, name, start_time, teachers, notes } = danceClass;
-  const start = moment(start_time).format('h:mm a');
-  const end = moment(end_time).format('h:mm a');
+  const start = moment(start_time).tz(LOCATION_TIMEZONE).format('h:mm a');
+  const end = moment(end_time).tz(LOCATION_TIMEZONE).format('h:mm a');
 
   const handleDelete = () => {
     try {
@@ -72,8 +73,9 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
       <div className='fdr'>
         <div className='phxl fdc fjc'>
           <div className='time-bubble tac'>
-            <div className='font14 openSansBold'><IonIcon className='prm' icon={timeOutline}/>{start}</div>
+            <div className='mtl font14 openSansBold'><IonIcon className='prm' icon={timeOutline}/>{start}</div>
             <div className='font14 openSansBold'><IonIcon className='plm r180' icon={arrowUndoOutline}/>{end}</div>
+            <div className='timezone-indicator'>{moment.tz(LOCATION_TIMEZONE).format('z')}</div>
           </div>
         </div>
         <IonCard className='flex1'>

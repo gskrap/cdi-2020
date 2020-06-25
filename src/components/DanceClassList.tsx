@@ -58,7 +58,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
       <IonToast
         isOpen={showDeleteToast}
         onDidDismiss={() => setShowDeleteToast(false)}
-        message="Class Successfully Deleted"
+        message="Class Deleted"
         position="bottom"
         duration={1200}
       />
