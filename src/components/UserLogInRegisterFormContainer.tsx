@@ -127,7 +127,7 @@ const UserLogInRegisterFormContainer: React.FC<MappedActions<typeof actions>> = 
         <IonSegmentButton value={ActiveFormOptions.LOG_IN}>
           <IonLabel>Log In</IonLabel>
         </IonSegmentButton>
-        <IonSegmentButton value={ActiveFormOptions.REGISTER}>
+        <IonSegmentButton value={ActiveFormOptions.REGISTER} disabled>
           <IonLabel>Register</IonLabel>
         </IonSegmentButton>
       </IonSegment>
