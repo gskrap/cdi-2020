@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  IonButton,
-  IonDatetime,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonSegment,
-  IonSegmentButton,
-  IonSelect,
-  IonSelectOption
-} from '@ionic/react';
+import {IonButton, IonDatetime, IonInput, IonItem, IonLabel, IonSegment, IonSegmentButton} from '@ionic/react';
 import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
 import {User, UserGender, UserRole} from '../models/User';
@@ -28,17 +18,16 @@ const UserLogInRegisterFormContainer: React.FC<MappedActions<typeof actions>> = 
   const [lastName, setLastName] = React.useState('');
   const [dateOfBirth, setDateOfBirth] = React.useState('');
   const [phone, setPhone] = React.useState('');
-  const [gender, setGender] = React.useState();
 
   const handleRegister = () => {
     const user: Partial<User> = {
       email,
-      gender,
       password,
       phone,
       first_name: firstName,
       last_name: lastName,
       date_of_birth: dateOfBirth,
+      gender: UserGender.NOT_SPECIFIED,
       // TODO: role
       role: UserRole.STUDENT,
     };
@@ -98,20 +87,6 @@ const UserLogInRegisterFormContainer: React.FC<MappedActions<typeof actions>> = 
         <IonItem className="ion-no-padding">
           <IonLabel className='yellow' position='floating'>Phone Number</IonLabel>
           <IonInput onIonChange={e => setPhone(e.detail.value!)} type='tel'></IonInput>
-        </IonItem>
-        <IonItem className="ion-no-padding">
-          <IonLabel className='yellow' position='floating'>Gender</IonLabel>
-          <IonSelect
-            value={gender}
-            cancelText='Cancel'
-            okText='OK'
-            mode='ios'
-            onIonChange={e => setGender(e.detail.value)}
-          >
-            <IonSelectOption value={UserGender.FEMALE}>female</IonSelectOption>
-            <IonSelectOption value={UserGender.MALE}>male</IonSelectOption>
-            <IonSelectOption value={UserGender.NOT_SPECIFIED}>other</IonSelectOption>
-          </IonSelect>
         </IonItem>
       </form>
       <IonButton className='mtxxl' expand='block' onClick={handleRegister}>Register</IonButton>
