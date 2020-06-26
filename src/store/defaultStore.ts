@@ -5,11 +5,13 @@ import {DanceClass} from '../models/DanceClass';
 import {User} from '../models/User';
 import {StudentGroup} from '../models/StudentGroup';
 import {DanceClassLocation} from '../models/DanceClassLocation';
+import {CLASS_FILTER} from '../constants/settingsConstants';
 
 export type AppState = {
   logInLoading: boolean,
   loggedIn: boolean,
   currentUser: User | null,
+  danceClassFilter: CLASS_FILTER,
   danceClasses: DanceClass[] | null,
   danceClassesLoading: boolean,
   danceClassesLoaded: boolean,
@@ -25,6 +27,7 @@ const initialState: AppState = {
   logInLoading: false,
   loggedIn: false,
   currentUser: null,
+  danceClassFilter: CLASS_FILTER.MY,
   danceClasses: null,
   danceClassesLoading: false,
   danceClassesLoaded: false,

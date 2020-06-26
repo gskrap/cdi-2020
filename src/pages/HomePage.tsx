@@ -9,13 +9,18 @@ import Loader from '../components/Loader';
 import AppHeader from '../components/AppHeader';
 import {chevronDownCircleOutline} from 'ionicons/icons';
 import {RefresherEventDetail} from '@ionic/core';
+import {CLASS_FILTER} from '../constants/settingsConstants';
 
 type HomePageProps = {
+  currentUserId: number | null,
+  danceClassFilter: CLASS_FILTER,
   loading: boolean,
   loggedIn: boolean,
 }
 
 const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
+  currentUserId,
+  danceClassFilter,
   loading,
   loggedIn,
   actions,
@@ -26,19 +31,25 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
         console.error(e)
       })
     }
-
     actions.fetchGroups();
     actions.fetchLocations();
     actions.fetchTeachers();
   }, [actions]);
 
   const refresh = (event: CustomEvent<RefresherEventDetail>) => {
-    actions.fetchDanceClasses(undefined, event.detail.complete);
+    const arg = danceClassFilter === CLASS_FILTER.ALL ? undefined : currentUserId!;
+    actions.fetchDanceClasses(arg, event.detail.complete);
   };
+
+  const title = loggedIn
+    ? danceClassFilter === CLASS_FILTER.ALL
+    ? 'All Classes'
+    : 'My Classes'
+    : 'Welcome!';
 
   return (
     <IonPage id='home-page'>
-      <AppHeader title='Schedule'/>
+      <AppHeader title={title} showFilterToggle={loggedIn}/>
       <IonContent forceOverscroll={false}>
         {loggedIn &&  (
           <IonRefresher slot="fixed" onIonRefresh={refresh}>
@@ -59,6 +70,8 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
 
 const mapState = (state: AppState) => {
   return {
+    currentUserId: state.currentUser && state.currentUser.id,
+    danceClassFilter: state.danceClassFilter,
     loading: state.logInLoading,
     loggedIn: state.loggedIn,
   }

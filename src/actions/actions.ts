@@ -39,6 +39,7 @@ import {
   LogOutSuccessAction
 } from './actionTypes';
 import {User} from '../models/User';
+import {CLASS_FILTER} from '../constants/settingsConstants';
 
 export const TIMEOUT = 0;
 export type MappedActions<T extends (...args: any[]) => any> = ReturnType<T>;
@@ -108,15 +109,16 @@ export default (dispatch: Dispatch) => ({
       }
     },
 
-    async fetchDanceClasses(prefix?: string, cb?: () => void) {
+    async fetchDanceClasses(userId?: number, cb?: () => void) {
       dispatch<FetchDanceClassesAction>({type: FETCH_DANCE_CLASSES});
       try {
-        const response = await API.get(`${prefix || ''}/dance_classes`);
+        const response = await API.get(`${userId ? '/users/' + userId : ''}/dance_classes`);
         const responseBody = await checkHttpResponse(response);
         setTimeout(() => {
           dispatch<FetchDanceClassesSuccessAction>({
             type: FETCH_DANCE_CLASSES_SUCCESS,
             payload: responseBody,
+            filter: userId ? CLASS_FILTER.MY : CLASS_FILTER.ALL,
           });
           if (cb) cb();
         }, TIMEOUT);

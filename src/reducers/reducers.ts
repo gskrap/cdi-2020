@@ -60,6 +60,7 @@ const reducers = (state: any, action: any) => {
       return {
         ...state,
         danceClasses: action.payload,
+        danceClassFilter: action.filter,
         danceClassesLoading: false,
         danceClassesLoaded: true,
       };

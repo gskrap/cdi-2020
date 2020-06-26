@@ -1,19 +1,41 @@
 import React from 'react';
-import {IonButtons, IonHeader, IonBackButton, IonTitle, IonToolbar} from '@ionic/react';
+import {IonBackButton, IonButtons, IonHeader, IonTitle, IonToggle, IonToolbar} from '@ionic/react';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
-import { menuController } from '@ionic/core';
-import actions from '../actions/actions';
+import {menuController} from '@ionic/core';
+import actions, {MappedActions} from '../actions/actions';
+import {CLASS_FILTER} from '../constants/settingsConstants';
 
 type AppHeaderProps = {
+  currentUserId: number | null,
+  danceClassFilter: CLASS_FILTER,
   loggedIn: boolean,
   title: string,
+  showFilterToggle?: boolean,
 }
 
-const AppHeader: React.FC<AppHeaderProps> = ({ loggedIn, title }) => (
+const AppHeader: React.FC<AppHeaderProps & MappedActions<typeof actions>> = ({
+  currentUserId,
+  danceClassFilter,
+  loggedIn,
+  title,
+  showFilterToggle,
+  actions,
+}) => (
   <IonHeader>
     <IonToolbar color='primary'>
       <IonButtons slot='start'>
+        {showFilterToggle && (
+          <IonToggle
+            checked={danceClassFilter === CLASS_FILTER.ALL}
+            onIonChange={() => {
+              const arg = danceClassFilter === CLASS_FILTER.ALL ? currentUserId! : undefined;
+              setTimeout(() => {
+                actions.fetchDanceClasses(arg);
+              }, 200)
+            }}
+          />
+        )}
         <IonBackButton text=''></IonBackButton>
       </IonButtons>
       <IonTitle className='openSansExtraBold'>{title}</IonTitle>
@@ -30,6 +52,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({ loggedIn, title }) => (
 
 const mapState = (state: AppState) => {
   return {
+    currentUserId: state.currentUser && state.currentUser.id,
+    danceClassFilter: state.danceClassFilter,
     loggedIn: state.loggedIn,
   }
 };

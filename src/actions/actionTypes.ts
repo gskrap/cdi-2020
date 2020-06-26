@@ -2,6 +2,7 @@ import {User} from '../models/User';
 import {DanceClass} from '../models/DanceClass';
 import {DanceClassLocation} from '../models/DanceClassLocation';
 import {StudentGroup} from '../models/StudentGroup';
+import {CLASS_FILTER} from '../constants/settingsConstants';
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_FAIL = 'LOG_IN_REQUEST_FAIL';
@@ -61,6 +62,7 @@ export interface FetchDanceClassesFailAction {
 export interface FetchDanceClassesSuccessAction {
   type: typeof FETCH_DANCE_CLASSES_SUCCESS;
   payload: DanceClass[];
+  filter: CLASS_FILTER;
 }
 
 export interface FetchGroupsAction {
