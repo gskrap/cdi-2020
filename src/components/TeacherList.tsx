@@ -31,9 +31,14 @@ const TeacherList: React.FC<TeacherListProps & MappedActions<typeof actions>> = 
 
   return (
     <>
-      {loading && <Loader/>}
+      {loading && <Loader />}
       {!loading && teachers && teachers.map((teacher, i) => (
-        <UserCard user={teacher} routerLink={`/teachers/${teacher.id}`} key={i}/>
+        <UserCard
+          key={i}
+          user={teacher}
+          onClick={() => actions.setSelectedUser(teacher)}
+          routerLink={`/teachers/${teacher.id}`}
+        />
       ))}
     </>
   )

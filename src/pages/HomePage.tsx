@@ -49,7 +49,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
 
   return (
     <IonPage id='home-page'>
-      <AppHeader title={title} showFilterToggle={loggedIn}/>
+      <AppHeader title={title} showFilterToggle={loggedIn} />
       <IonContent forceOverscroll={false}>
         {loggedIn &&  (
           <IonRefresher slot="fixed" onIonRefresh={refresh}>
@@ -60,9 +60,9 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
             </IonRefresherContent>
           </IonRefresher>
         )}
-        {loading && <Loader/>}
-        {!loading && !loggedIn && <UserLogInRegisterFormContainer/>}
-        {!loading && loggedIn && <DanceClassList/>}
+        {loading && <Loader />}
+        {!loading && !loggedIn && <UserLogInRegisterFormContainer />}
+        {!loading && loggedIn && <DanceClassList />}
       </IonContent>
     </IonPage>
   );

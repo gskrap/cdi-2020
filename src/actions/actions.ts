@@ -36,7 +36,7 @@ import {
   LogInSuccessAction,
   LogOutFailAction,
   LogOutRequestAction,
-  LogOutSuccessAction
+  LogOutSuccessAction, SET_SELECTED_USER, SetSelectedUserAction
 } from './actionTypes';
 import {User} from '../models/User';
 import {CLASS_FILTER} from '../constants/settingsConstants';
@@ -187,6 +187,13 @@ export default (dispatch: Dispatch) => ({
         dispatch<FetchTeachersFailAction>({type: FETCH_TEACHERS_FAIL});
         console.error(e);
       }
+    },
+
+    setSelectedUser(user: User | null) {
+      dispatch<SetSelectedUserAction>({
+        type: SET_SELECTED_USER,
+        payload: user,
+      })
     },
   },
 })

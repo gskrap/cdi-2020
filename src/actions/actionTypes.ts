@@ -22,6 +22,7 @@ export const FETCH_LOCATIONS_SUCCESS = 'FETCH_LOCATIONS_SUCCESS';
 export const FETCH_TEACHERS = 'FETCH_TEACHERS';
 export const FETCH_TEACHERS_FAIL = 'FETCH_TEACHERS_FAIL';
 export const FETCH_TEACHERS_SUCCESS = 'FETCH_TEACHERS_SUCCESS';
+export const SET_SELECTED_USER = 'SET_SELECTED_USER';
 
 export interface LogInRequestAction {
   type: typeof LOG_IN_REQUEST;
@@ -102,4 +103,9 @@ export interface FetchTeachersFailAction {
 export interface FetchTeachersSuccessAction {
   type: typeof FETCH_TEACHERS_SUCCESS;
   payload: User[];
+}
+
+export interface SetSelectedUserAction {
+  type: typeof SET_SELECTED_USER;
+  payload: User | null;
 }

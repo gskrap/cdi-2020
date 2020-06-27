@@ -19,7 +19,7 @@ const DanceClassDetailsPage: React.FC<DanceClassDetailsPageProps & RouteComponen
     <AppHeader title='Edit Class' />
     <IonContent forceOverscroll={false}>
       {userRole === UserRole.ADMIN && danceClass && (
-        <DanceClassForm danceClass={danceClass}/>
+        <DanceClassForm danceClass={danceClass} />
       )}
     </IonContent>
   </IonPage>

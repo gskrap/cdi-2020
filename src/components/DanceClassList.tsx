@@ -52,10 +52,10 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
 
   return (
     <>
-      {loading && <Loader/>}
+      {loading && <Loader />}
       {danceClasses && danceClasses.length === 0 && (
         <div className='no-classes-warning'>
-          <IonIcon icon={sadOutline}/>
+          <IonIcon icon={sadOutline} />
           <div>Whoa! You have no classes</div>
           <div>Try the toggle</div>
         </div>
@@ -64,7 +64,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
         <React.Fragment key={i}>
           <IonItemDivider sticky>{date}</IonItemDivider>
           {groupedDanceClasses[date as keyof typeof groupedDanceClasses].map((danceClass, j) => (
-            <DanceClassCard key={`${i}-${j}`} danceClass={danceClass} showToast={() => setShowDeleteToast(true)}/>
+            <DanceClassCard key={`${i}-${j}`} danceClass={danceClass} showToast={() => setShowDeleteToast(true)} />
           ))}
         </React.Fragment>
       ))}

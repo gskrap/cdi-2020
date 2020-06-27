@@ -42,7 +42,7 @@ const AppHeader: React.FC<AppHeaderProps & MappedActions<typeof actions>> = ({
       {loggedIn && (
         <IonButtons slot='end'>
           <div onClick={() => menuController.open()} className='plxxxl prs'>
-            <img className='header-image' src='/assets/cdi-logo-white-small.png' alt='logo-small'/>
+            <img className='header-image' src='/assets/cdi-logo-white-small.png' alt='logo-small' />
           </div>
         </IonButtons>
       )}

@@ -73,8 +73,8 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
       <div className='fdr'>
         <div className='phxl fdc fjc'>
           <div className='time-bubble tac'>
-            <div className='mtl font14 openSansBold'><IonIcon className='prm' icon={timeOutline}/>{start}</div>
-            <div className='font14 openSansBold'><IonIcon className='plm r180' icon={arrowUndoOutline}/>{end}</div>
+            <div className='mtl font14 openSansBold'><IonIcon className='prm' icon={timeOutline} />{start}</div>
+            <div className='font14 openSansBold'><IonIcon className='plm r180' icon={arrowUndoOutline} />{end}</div>
             <div className='timezone-indicator'>{moment.tz(LOCATION_TIMEZONE).format('z')}</div>
           </div>
         </div>
@@ -96,12 +96,12 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
               </IonFab>
             )}
             <div className='openSansExtraBold font14 mbxl prxxxl'>{name}</div>
-            {location && <div className='mbxl'><IonIcon className='prm' icon={locationOutline}/>{location.name}</div>}
+            {location && <div className='mbxl'><IonIcon className='prm' icon={locationOutline} />{location.name}</div>}
             {shouldDisplayGroups && (
               <div className='mbxl'>
                 {groups.map((group, i) => (
                   <div className={i !== 0 ? 'padded20' : ''} key={i}>
-                    {i === 0 ? <IonIcon className='prm' icon={peopleCircleOutline}/> : null}
+                    {i === 0 ? <IonIcon className='prm' icon={peopleCircleOutline} /> : null}
                     {group.name}
                   </div>
                 ))}
@@ -111,7 +111,7 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
              <>
                {teachers.map((teacher, i) => (
                  <div className={i !== 0 ? 'padded20' : ''} key={i}>
-                   {i === 0 ? <IonIcon className='prm' icon={body}/> : null}
+                   {i === 0 ? <IonIcon className='prm' icon={body} /> : null}
                    {`${teacher.first_name} ${teacher.last_name}`}
                  </div>
                ))}

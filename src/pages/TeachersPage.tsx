@@ -6,9 +6,9 @@ import TeacherList from '../components/TeacherList';
 const TeachersPage: React.FC = () => {
   return (
     <IonPage id='teachers-page'>
-      <AppHeader title='Teachers'/>
+      <AppHeader title='Teachers' />
       <IonContent>
-        <TeacherList/>
+        <TeacherList />
       </IonContent>
     </IonPage>
   );

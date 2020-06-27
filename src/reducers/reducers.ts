@@ -15,7 +15,7 @@ import {
   LOG_IN_SUCCESS,
   LOG_OUT_FAIL,
   LOG_OUT_REQUEST,
-  LOG_OUT_SUCCESS
+  LOG_OUT_SUCCESS, SET_SELECTED_USER
 } from '../actions/actionTypes';
 
 const reducers = (state: any, action: any) => {
@@ -111,6 +111,11 @@ const reducers = (state: any, action: any) => {
         ...state,
         teachers: action.payload,
         teachersLoading: false,
+      };
+    case SET_SELECTED_USER:
+      return {
+        ...state,
+        selectedUser: action.payload,
       };
     default:
       return state

@@ -3,8 +3,10 @@ import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {User} from '../models/User';
 import Loader from './Loader';
 import UserCard from './UserCard';
+import {connect} from 'react-redux';
+import actions, {MappedActions} from '../actions/actions';
 
-const UserList: React.FC = () => {
+const UserList: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
   const [loading, setLoading] = React.useState(true);
   const [users, setUsers] = React.useState<User[]>([]);
 
@@ -25,12 +27,12 @@ const UserList: React.FC = () => {
 
   return (
     <>
-      {loading && <Loader/>}
+      {loading && <Loader />}
       {!loading && users && users.map((user, i) => (
-        <UserCard user={user} routerLink={`/users/${user.id}`} distinguishUsers={true} key={i}/>
+        <UserCard user={user} onClick={() => actions.setSelectedUser(user)} routerLink={`/users/${user.id}`} distinguishUsers={true} key={i} />
       ))}
     </>
   );
 };
 
-export default UserList;
+export default connect(null, actions)(UserList);

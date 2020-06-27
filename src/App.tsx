@@ -12,7 +12,7 @@ import { menuController } from '@ionic/core';
 import { IonReactRouter } from '@ionic/react-router';
 import HomePage from './pages/HomePage';
 import TeachersPage from './pages/TeachersPage';
-import TeacherDetailsPage from './pages/TeacherDetailsPage';
+import TeacherDetailsPage from './pages/UserDetailsPage';
 import {body, createOutline, logOutOutline, peopleOutline} from 'ionicons/icons';
 import actions, {MappedActions} from './actions/actions';
 import {connect} from 'react-redux';
@@ -55,12 +55,12 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
             {userRole === UserRole.ADMIN && (
               <IonItem className='pvl' routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
                 <span>Teachers</span>
-                <IonIcon icon={body} slot='end'/>
+                <IonIcon icon={body} slot='end' />
               </IonItem>
             )}
             <IonItem className='pvl' routerLink='/' routerDirection='root' onClick={handleLogOut}>
               <span>Log Out</span>
-              <IonIcon icon={logOutOutline} slot='end'/>
+              <IonIcon icon={logOutOutline} slot='end' />
             </IonItem>
           </IonList>
           {userRole === UserRole.ADMIN && (
@@ -68,23 +68,23 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
               <h1 className='openSansExtraBold mlxl'>Admin Menu</h1>
               <IonItem className='pvl' routerLink='/users' routerDirection='forward' onClick={() => menuController.close()}>
                 <span>Users</span>
-                <IonIcon icon={peopleOutline} slot='end'/>
+                <IonIcon icon={peopleOutline} slot='end' />
               </IonItem>
               <IonItem className='pvl' routerLink='/danceClasses/new' routerDirection='forward' onClick={() => menuController.close()}>
                 <span>Create Class</span>
-                <IonIcon icon={createOutline} slot='end'/>
+                <IonIcon icon={createOutline} slot='end' />
               </IonItem>
             </IonList>
           )}
         </IonMenu>
         <IonRouterOutlet id='router'>
-          <Route exact path='/' component={HomePage}/>
-          <Route exact path='/danceClasses/new' component={DanceClassCreatePage}/>
-          <Route exact path='/danceClasses/:danceClassId/edit' component={DanceClassDetailsPage}/>
-          <Route exact path='/teachers' component={TeachersPage}/>
-          <Route exact path='/teachers/:teacherId' component={TeacherDetailsPage}/>
-          <Route exact path='/users' component={UsersPage}/>
-          <Route exact path='/users/:userId' component={UserDetailsPage}/>
+          <Route exact path='/' component={HomePage} />
+          <Route exact path='/danceClasses/new' component={DanceClassCreatePage} />
+          <Route exact path='/danceClasses/:danceClassId/edit' component={DanceClassDetailsPage} />
+          <Route exact path='/teachers' component={TeachersPage} />
+          <Route exact path='/teachers/:teacherId' component={TeacherDetailsPage} />
+          <Route exact path='/users' component={UsersPage} />
+          <Route exact path='/users/:userId' component={UserDetailsPage} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
