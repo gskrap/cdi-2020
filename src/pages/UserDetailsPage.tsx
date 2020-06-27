@@ -1,4 +1,4 @@
-import {IonContent, IonIcon, IonPage} from '@ionic/react';
+import {IonButton, IonContent, IonIcon, IonPage} from '@ionic/react';
 import React from 'react';
 import AppHeader from '../components/AppHeader';
 import {RouteComponentProps} from 'react-router';
@@ -10,6 +10,7 @@ import {calendarOutline, callOutline, mailOutline} from 'ionicons/icons';
 import moment from 'moment';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {EmergencyContact} from '../models/EmergencyContact';
+import {getUploadWidget} from '../helpers/getUploadWidget';
 
 type UserDetailsPageProps = {
   currentUser: User | null;
@@ -18,8 +19,8 @@ type UserDetailsPageProps = {
 
 const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps> = ({ currentUser, selectedUser }) => {
   const [emergencyContacts, setEmergencyContacts] = React.useState<EmergencyContact[]>([]);
+  const uploadWidget = getUploadWidget();
 
-  const currentUserRole = (currentUser || {}).role;
   const {
     id,
     role,
@@ -31,7 +32,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps> = ({
     date_of_birth,
   } = selectedUser || {};
 
-  const userIsEntitled = currentUserRole && [UserRole.ADMIN, UserRole.WORK_STUDY].includes(currentUserRole);
+  const userIsEntitled = currentUser && [UserRole.ADMIN, UserRole.WORK_STUDY].includes(currentUser.role);
 
   React.useEffect(() => {
     if (userIsEntitled) {
@@ -55,6 +56,9 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps> = ({
         {selectedUser && (
           <div className='phxxl'>
             <div className='photo-placeholder' />
+            {userIsEntitled && (
+              <IonButton className='mtxxl' expand='block' onClick={() => uploadWidget.open()}>Update Photo</IonButton>
+            )}
             {bio && <p>{bio}</p>}
             {userIsEntitled && (
               <div className='mtxxxxl pvxxl entitled-section'>

@@ -29,7 +29,7 @@ const UserList: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
     <>
       {loading && <Loader />}
       {!loading && users && users.map((user, i) => (
-        <UserCard user={user} onClick={() => actions.setSelectedUser(user)} routerLink={`/users/${user.id}`} distinguishUsers={true} key={i} />
+        <UserCard key={i} user={user} onClick={() => actions.setSelectedUser(user)} routerLink={`/users/${user.id}`} distinguishUsers={true} />
       ))}
     </>
   );
