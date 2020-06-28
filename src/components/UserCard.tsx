@@ -6,15 +6,15 @@ import {body, personSharp, settingsSharp} from 'ionicons/icons';
 type UserCardProps = {
   user: User,
   routerLink: string;
-  distinguishUsers?: boolean;
+  teachersOnly?: boolean;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user, routerLink, distinguishUsers = false }) => {
+const UserCard: React.FC<UserCardProps> = ({ user, routerLink, teachersOnly = false }) => {
   const { first_name, last_name } = user;
 
   let icon = body;
 
-  if (distinguishUsers) {
+  if (!teachersOnly) {
     switch(user.role) {
       case UserRole.TEACHER:
         icon = body;
@@ -45,7 +45,7 @@ const UserCard: React.FC<UserCardProps> = ({ user, routerLink, distinguishUsers 
           <span className='openSansExtraBold'>{first_name}</span>
           <span>&nbsp;</span>
           <span className='openSansExtraBold'>{last_name}</span>
-          <div>{user.role}</div>
+          {!teachersOnly && <div>{user.role}</div>}
         </div>
       </div>
     </IonItem>

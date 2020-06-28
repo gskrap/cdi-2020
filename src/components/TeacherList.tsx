@@ -36,6 +36,7 @@ const TeacherList: React.FC<TeacherListProps & MappedActions<typeof actions>> = 
         <UserCard
           key={i}
           user={teacher}
+          teachersOnly={true}
           routerLink={`/users/${teacher.id}`}
         />
       ))}
