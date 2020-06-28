@@ -1,6 +1,9 @@
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {Dispatch} from 'redux';
 import {
+  FETCH_ALL_USERS,
+  FETCH_ALL_USERS_FAIL,
+  FETCH_ALL_USERS_SUCCESS,
   FETCH_DANCE_CLASSES,
   FETCH_DANCE_CLASSES_FAIL,
   FETCH_DANCE_CLASSES_SUCCESS,
@@ -13,6 +16,9 @@ import {
   FETCH_TEACHERS,
   FETCH_TEACHERS_FAIL,
   FETCH_TEACHERS_SUCCESS,
+  FetchAllUsersAction,
+  FetchAllUsersFailAction,
+  FetchAllUsersSuccessAction,
   FetchDanceClassesAction,
   FetchDanceClassesFailAction,
   FetchDanceClassesSuccessAction,
@@ -31,12 +37,14 @@ import {
   LOG_OUT_FAIL,
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
+  SET_SELECTED_USER,
   LogInFailAction,
   LogInRequestAction,
   LogInSuccessAction,
   LogOutFailAction,
   LogOutRequestAction,
   LogOutSuccessAction,
+  SetSelectedUserAction,
 } from './actionTypes';
 import {User} from '../models/User';
 import {CLASS_FILTER} from '../constants/settingsConstants';
@@ -188,5 +196,30 @@ export default (dispatch: Dispatch) => ({
         console.error(e);
       }
     },
+
+    async fetchAllUsers() {
+      dispatch<FetchAllUsersAction>({type: FETCH_ALL_USERS});
+      try {
+        const response = await API.get('/users');
+        const responseBody = await checkHttpResponse(response);
+        setTimeout(() => {
+          dispatch<FetchAllUsersSuccessAction>({
+            type: FETCH_ALL_USERS_SUCCESS,
+            payload: responseBody,
+          })
+        }, TIMEOUT);
+      } catch (e) {
+        dispatch<FetchAllUsersFailAction>({type: FETCH_ALL_USERS_FAIL});
+        console.error(e);
+      }
+    },
+
+    setSelectedUser(user: User, newData: boolean = false) {
+      dispatch<SetSelectedUserAction>({
+        type: SET_SELECTED_USER,
+        payload: user,
+        newData,
+      })
+    }
   },
 })

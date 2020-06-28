@@ -37,6 +37,7 @@ const TeacherList: React.FC<TeacherListProps & MappedActions<typeof actions>> = 
           key={i}
           user={teacher}
           teachersOnly={true}
+          onClick={() => actions.setSelectedUser(teacher)}
           routerLink={`/users/${teacher.id}`}
         />
       ))}

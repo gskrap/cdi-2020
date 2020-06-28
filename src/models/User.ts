@@ -1,3 +1,5 @@
+import {StudentGroup} from './StudentGroup';
+
 export interface User {
   id: number;
   role: UserRole;
@@ -6,6 +8,7 @@ export interface User {
   date_of_birth: string;
   email: string;
   phone: string;
+  groups?: StudentGroup[];
   emergency_contact_id: number;
   gender: UserGender;
   alumni: boolean;

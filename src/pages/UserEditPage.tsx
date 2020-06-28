@@ -3,12 +3,12 @@ import React from 'react';
 import AppHeader from '../components/AppHeader';
 import UserForm from '../components/UserForm';
 
-const UserEditPage: React.FC = (props: any) => {
+const UserEditPage: React.FC = () => {
   return (
     <IonPage id='user-edit-page'>
       <AppHeader title='Edit User' />
       <IonContent forceOverscroll={false}>
-        <UserForm userToEdit={props.location.userToEdit} />
+        <UserForm />
       </IonContent>
     </IonPage>
   );

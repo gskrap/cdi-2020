@@ -5,11 +5,12 @@ import {body, personSharp, settingsSharp} from 'ionicons/icons';
 
 type UserCardProps = {
   user: User,
+  onClick: () => void;
   routerLink: string;
   teachersOnly?: boolean;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user, routerLink, teachersOnly = false }) => {
+const UserCard: React.FC<UserCardProps> = ({ user, onClick, routerLink, teachersOnly = false }) => {
   const { first_name, last_name } = user;
 
   let icon = body;
@@ -34,10 +35,10 @@ const UserCard: React.FC<UserCardProps> = ({ user, routerLink, teachersOnly = fa
   }
 
   return (
-    <IonItem className='fdr mvxxxxl' routerLink={routerLink} routerDirection='forward' lines='none'>
+    <IonItem className='fdr mvxxxxl' onClick={onClick} routerLink={routerLink} routerDirection='forward' lines='none'>
       <div className='flex1 fdr'>
         <div className='fdc fjc'>
-          <div className='profile-bubble'>
+          <div className={`profile-bubble ${user.archived ? 'archived' : ''}`}>
             <IonIcon icon={icon} />
           </div>
         </div>

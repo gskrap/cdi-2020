@@ -1,29 +1,22 @@
 import React from 'react';
-import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {User} from '../models/User';
 import Loader from './Loader';
 import UserCard from './UserCard';
 import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
+import {AppState} from '../store/defaultStore';
 
-const UserList: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
-  const [loading, setLoading] = React.useState(true);
-  const [users, setUsers] = React.useState<User[]>([]);
+interface UserListProps {
+  users: User[] | null;
+  loading: boolean;
+}
 
+const UserList: React.FC<UserListProps & MappedActions<typeof actions>> = ({ users, loading, actions }) => {
   React.useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await API.get('/users');
-        const responseBody = await checkHttpResponse(response);
-        setLoading(false);
-        setUsers(responseBody);
-      } catch (e) {
-        setLoading(false);
-        console.error(e)
-      }
-    };
-    fetchUsers();
-  }, []);
+    if (!users) {
+      actions.fetchAllUsers();
+    }
+  }, [users]);
 
   return (
     <>
@@ -32,6 +25,7 @@ const UserList: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
         <UserCard
           key={i}
           user={user}
+          onClick={() => actions.setSelectedUser(user)}
           routerLink={`/users/${user.id}`}
         />
       ))}
@@ -39,4 +33,11 @@ const UserList: React.FC<MappedActions<typeof actions>> = ({ actions }) => {
   );
 };
 
-export default connect(null, actions)(UserList);
+const mapState = (state: AppState) => {
+  return {
+    users: state.allUsers,
+    loading: state.allUsersLoading,
+  }
+};
+
+export default connect(mapState, actions)(UserList);

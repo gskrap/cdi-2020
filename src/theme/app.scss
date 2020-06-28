@@ -65,6 +65,11 @@
     margin: auto;
     font-size: 40px;
   }
+  &.archived {
+    > ion-icon {
+      color: var(--ion-color-warning);
+    }
+  }
 }
 
 .edit-icon {

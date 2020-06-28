@@ -1,43 +1,41 @@
 import actions, {MappedActions} from '../actions/actions';
 import React from 'react';
-import {User} from '../models/User';
-import {
-  IonButton,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonTextarea,
-  IonFooter,
-  IonToolbar,
-} from '@ionic/react';
+import {User, UserRole} from '../models/User';
+import {IonButton, IonFooter, IonSelect, IonInput, IonItem, IonLabel, IonTextarea, IonSelectOption, IonToolbar,} from '@ionic/react';
 import {connect} from 'react-redux';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {useHistory} from 'react-router';
+import {AppState} from '../store/defaultStore';
+import {StudentGroup} from '../models/StudentGroup';
 
 type UserFormProps = {
-  userToEdit: User,
+  selectedUser: User,
+  availableGroups: StudentGroup[] | null,
 }
 
-const UserForm: React.FC<UserFormProps & MappedActions<typeof actions>> = ({ userToEdit, actions }) => {
+const UserForm: React.FC<UserFormProps & MappedActions<typeof actions>> = ({ availableGroups, selectedUser, actions }) => {
   const history = useHistory();
 
-  const [selectedUser, setSelectedUser] = React.useState<User>(userToEdit);
+  const [editUser, setEditUser] = React.useState<User>(selectedUser);
+  const [usersGroups, setUsersGroups] = React.useState<number[]>(((editUser || []).groups || []).map(g => g.id));
 
   const updateUserField = (updatedField: Partial<User>) => {
     const updatedUser = {
-      ...selectedUser,
+      ...editUser,
       ...updatedField,
     };
-    setSelectedUser(updatedUser);
+    setEditUser(updatedUser);
   };
 
   const handleSave = () => {
     const updateUser = async () => {
+      const postUser = editUser;
+      delete postUser.groups;
       try {
-        const response = await API.put(`/users/${selectedUser.id}`, { user: selectedUser });
+        await API.post(`/users/${selectedUser.id}/groups`, { values: usersGroups });
+        const response = await API.put(`/users/${selectedUser.id}`, { user: postUser });
         const responseBody = await checkHttpResponse(response);
-        setSelectedUser(responseBody);
-        history.goBack();
+        actions.setSelectedUser(responseBody, true);
         history.goBack();
       } catch (e) {
         console.error(e);
@@ -51,23 +49,40 @@ const UserForm: React.FC<UserFormProps & MappedActions<typeof actions>> = ({ use
       <form className='phxxl'>
         <IonItem className="ion-no-padding">
           <IonLabel className='yellow' position='floating'>First Name</IonLabel>
-          <IonInput value={selectedUser.first_name} onIonChange={e => updateUserField({ first_name: e.detail.value! })} type='text'></IonInput>
+          <IonInput value={editUser.first_name} onIonChange={e => updateUserField({ first_name: e.detail.value! })} type='text'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
           <IonLabel className='yellow' position='floating'>Last Name</IonLabel>
-          <IonInput value={selectedUser.last_name} onIonChange={e => updateUserField({ last_name: e.detail.value! })} type='text'></IonInput>
+          <IonInput value={editUser.last_name} onIonChange={e => updateUserField({ last_name: e.detail.value! })} type='text'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
           <IonLabel className='yellow' position='floating'>Email</IonLabel>
-          <IonInput value={selectedUser.email} onIonChange={e => updateUserField({ email: e.detail.value! })} type='email'></IonInput>
+          <IonInput value={editUser.email} onIonChange={e => updateUserField({ email: e.detail.value! })} type='email'></IonInput>
         </IonItem>
         <IonItem className="ion-no-padding">
           <IonLabel className='yellow' position='floating'>Phone Number</IonLabel>
-          <IonInput value={selectedUser.phone} onIonChange={e => updateUserField({ phone: e.detail.value! })} type='tel'></IonInput>
+          <IonInput value={editUser.phone} onIonChange={e => updateUserField({ phone: e.detail.value! })} type='tel'></IonInput>
         </IonItem>
+        {editUser.role === UserRole.STUDENT && (
+          <IonItem className="ion-no-padding">
+            <IonLabel className='yellow' position='floating'>Groups</IonLabel>
+            <IonSelect
+              value={usersGroups}
+              multiple={true}
+              cancelText='Cancel'
+              okText='OK'
+              mode='ios'
+              onIonChange={e => setUsersGroups(e.detail.value)}
+            >
+              {availableGroups && availableGroups.map((group, i) => (
+                <IonSelectOption key={i} value={group.id}>{group.name}</IonSelectOption>
+              ))}
+            </IonSelect>
+          </IonItem>
+        )}
         <IonItem className="ion-no-padding">
           <IonLabel className='yellow' position='floating'>Bio</IonLabel>
-          <IonTextarea value={selectedUser.bio} rows={12} onIonChange={e => updateUserField({ bio: e.detail.value! })}></IonTextarea>
+          <IonTextarea value={editUser.bio} rows={12} onIonChange={e => updateUserField({ bio: e.detail.value! })}></IonTextarea>
         </IonItem>
       </form>
       <IonFooter>
@@ -79,5 +94,12 @@ const UserForm: React.FC<UserFormProps & MappedActions<typeof actions>> = ({ use
   )
 };
 
-export default connect(null, actions)(UserForm);
+const mapState = ({ selectedUser, groups }: AppState) => {
+  return {
+    selectedUser: selectedUser!,
+    availableGroups: groups,
+  }
+};
+
+export default connect(mapState, actions)(UserForm);
 

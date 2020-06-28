@@ -1,7 +1,7 @@
 import {IonButton, IonContent, IonIcon, IonPage} from '@ionic/react';
 import React from 'react';
 import AppHeader from '../components/AppHeader';
-import {Route, RouteComponentProps, Switch} from 'react-router';
+import {RouteComponentProps} from 'react-router';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
@@ -12,18 +12,18 @@ import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {EmergencyContact} from '../models/EmergencyContact';
 import {getUploadWidget} from '../helpers/getUploadWidget';
 import {Link} from 'react-router-dom';
-import UserEditPage from './UserEditPage';
 
 type UserDetailsPageProps = {
   currentUser: User | null;
+  selectedUser: User | null;
 };
 
 const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ userId: string }> & MappedActions<typeof actions>> = ({
   currentUser,
+  selectedUser,
   actions,
   match,
 }) => {
-  const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
   const [emergencyContacts, setEmergencyContacts] = React.useState<EmergencyContact[]>([]);
 
   const {
@@ -36,7 +36,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
     phone,
     date_of_birth,
     imgUrl,
-  } = selectedUser || {};
+  } = selectedUser|| {};
   const { userId } = match.params;
 
   const userIsEntitled = currentUser && [UserRole.ADMIN, UserRole.WORK_STUDY].includes(currentUser.role);
@@ -47,11 +47,11 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
       try {
         const response = await API.put(`/users/${userId}`, { user: { imgUrl } });
         const responseBody = await checkHttpResponse(response);
-        setSelectedUser(responseBody);
+        actions.setSelectedUser(responseBody, true);
       } catch (e) {
         console.error(e);
       }
-    }
+    };
     updateUserImgUrl(id!, imgUrl);
   };
 
@@ -62,7 +62,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
       try {
         const response = await API.get(`/users/${userId}`);
         const responseBody = await checkHttpResponse(response);
-        setSelectedUser(responseBody);
+        actions.setSelectedUser(responseBody, true);
       } catch (e) {
         console.error(e)
       }
@@ -92,7 +92,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
         {selectedUser && (
           <div className='ptxxl phxxl'>
             {imgUrl && (
-              <img src={imgUrl} />
+              <img src={imgUrl} alt='user-img' />
             )}
             {!imgUrl && (
               <IonIcon className='photo-placeholder' icon={cloudUpload} />
@@ -100,16 +100,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
             {(userIsEntitled || selectedUserIsCurrentUser) && (
               <div className='fdr mtxxl'>
                 <IonButton className='flex1' onClick={() => uploadWidget.open()}>Update Photo</IonButton>
-                <Link
-                  className='flex1'
-                  to={{
-                    pathname: `/users/${userId}/edit`,
-                    // @ts-ignore
-                    userToEdit: selectedUser,
-                  }}
-                >
-                  <IonButton className='width100'>Update Info</IonButton>
-                </Link>
+                <IonButton className='flex1' routerLink={`/users/${userId}/edit`}>Update Info</IonButton>
               </div>
             )}
             {bio && <p>{bio}</p>}
@@ -167,8 +158,8 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
 };
 
 const mapState = (state: AppState) => {
-  const { currentUser } = state;
-  return { currentUser }
+  const { currentUser, selectedUser } = state;
+  return { currentUser, selectedUser }
 };
 
 export default connect(mapState, actions)(UserDetailsPage);

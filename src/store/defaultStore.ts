@@ -21,6 +21,9 @@ export type AppState = {
   locationsLoading: boolean,
   teachers: User[] | null,
   teachersLoading: boolean,
+  allUsers: User[] | null,
+  allUsersLoading: boolean,
+  selectedUser: User| null,
 }
 
 const initialState: AppState = {
@@ -37,6 +40,9 @@ const initialState: AppState = {
   locationsLoading: false,
   teachers: null,
   teachersLoading: false,
+  allUsers: null,
+  allUsersLoading: false,
+  selectedUser: null,
 };
 
 const configureStore = (initialState: AppState) => {

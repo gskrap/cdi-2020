@@ -10,13 +10,18 @@ import {
   FETCH_TEACHERS,
   FETCH_TEACHERS_FAIL,
   FETCH_TEACHERS_SUCCESS,
+  FETCH_ALL_USERS,
+  FETCH_ALL_USERS_FAIL,
+  FETCH_ALL_USERS_SUCCESS,
   LOG_IN_FAIL,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
   LOG_OUT_FAIL,
   LOG_OUT_REQUEST,
-  LOG_OUT_SUCCESS, SET_SELECTED_USER
+  LOG_OUT_SUCCESS, SET_SELECTED_USER,
 } from '../actions/actionTypes';
+import {User} from '../models/User';
+import {AppState} from '../store/defaultStore';
 
 const reducers = (state: any, action: any) => {
   switch (action.type) {
@@ -111,6 +116,40 @@ const reducers = (state: any, action: any) => {
         ...state,
         teachers: action.payload,
         teachersLoading: false,
+      };
+    case FETCH_ALL_USERS:
+      return {
+        ...state,
+        allUsersLoading: true,
+      };
+    case FETCH_ALL_USERS_FAIL:
+      return {
+        ...state,
+        allUsersLoading: false,
+      };
+    case FETCH_ALL_USERS_SUCCESS:
+      return {
+        ...state,
+        allUsers: action.payload,
+        allUsersLoading: false,
+      };
+    case SET_SELECTED_USER:
+      const stateUpdatePayload: Partial<AppState> = {
+        selectedUser: action.payload,
+      };
+      if (action.newData && state.teachers) {
+        stateUpdatePayload.teachers = (state.teachers || []).map((teacher: User) => {
+          return teacher.id === action.payload.id ? action.payload : teacher;
+        });
+      }
+      if (action.newData && state.allUsers) {
+        stateUpdatePayload.allUsers = (state.allUsers || []).map((user: User) => {
+          return user.id === action.payload.id ? action.payload : user;
+        });
+      }
+      return {
+        ...state,
+        ...stateUpdatePayload,
       };
     default:
       return state
