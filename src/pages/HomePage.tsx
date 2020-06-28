@@ -10,16 +10,17 @@ import AppHeader from '../components/AppHeader';
 import {chevronDownCircleOutline} from 'ionicons/icons';
 import {RefresherEventDetail} from '@ionic/core';
 import {CLASS_FILTER} from '../constants/settingsConstants';
+import {User, UserRole} from '../models/User';
 
 type HomePageProps = {
-  currentUserId: number | null,
+  currentUser: User | null,
   danceClassFilter: CLASS_FILTER,
   loading: boolean,
   loggedIn: boolean,
 }
 
 const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
-  currentUserId,
+  currentUser,
   danceClassFilter,
   loading,
   loggedIn,
@@ -37,7 +38,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
   }, [actions]);
 
   const refresh = (event: CustomEvent<RefresherEventDetail>) => {
-    const arg = danceClassFilter === CLASS_FILTER.ALL ? undefined : currentUserId!;
+    const arg = danceClassFilter === CLASS_FILTER.ALL ? undefined : currentUser!.id;
     actions.fetchDanceClasses(arg, event.detail.complete);
   };
 
@@ -49,7 +50,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
 
   return (
     <IonPage id='home-page'>
-      <AppHeader title={title} showFilterToggle={loggedIn} />
+      <AppHeader title={title} showFilterToggle={loggedIn && currentUser!.role !== UserRole.STUDENT} />
       <IonContent forceOverscroll={false}>
         {loggedIn &&  (
           <IonRefresher slot="fixed" onIonRefresh={refresh}>
@@ -70,7 +71,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
 
 const mapState = (state: AppState) => {
   return {
-    currentUserId: state.currentUser && state.currentUser.id,
+    currentUser: state.currentUser,
     danceClassFilter: state.danceClassFilter,
     loading: state.logInLoading,
     loggedIn: state.loggedIn,

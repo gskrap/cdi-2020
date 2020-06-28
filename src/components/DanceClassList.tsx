@@ -8,7 +8,7 @@ import Loader from './Loader';
 import DanceClassCard from './DanceClassCard';
 import {IonIcon, IonItemDivider, IonToast} from '@ionic/react';
 import {LOCATION_TIMEZONE} from '../constants/settingsConstants';
-import {sadOutline} from 'ionicons/icons';
+import {helpCircleOutline} from 'ionicons/icons';
 import {User, UserRole} from '../models/User';
 
 type DanceClassListProps = {
@@ -55,9 +55,9 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
       {loading && <Loader />}
       {danceClasses && danceClasses.length === 0 && (
         <div className='no-classes-warning'>
-          <IonIcon icon={sadOutline} />
-          <div>Whoa! You have no classes</div>
-          <div>Try the toggle</div>
+          <IonIcon icon={helpCircleOutline} />
+          <div>Looks like you have no classes yet</div>
+          {currentUser.role !== UserRole.STUDENT && <div>Try the toggle</div>}
         </div>
       )}
       {groupedDanceClasses && Object.keys(groupedDanceClasses).map((date, i) => (
