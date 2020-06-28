@@ -12,13 +12,13 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps & MappedActions<typeof actions>> = ({ users, loading, actions }) => {
-  const [showArchived, setShowArchived] = React.useState(true);
+  const [showArchived, setShowArchived] = React.useState(false);
 
   React.useEffect(() => {
     actions.fetchAllUsers();
   }, [actions]);
 
-  const usersToRender = showArchived ? users : users!.filter(u => !u.archived);
+  const usersToRender = showArchived ? users : (users || []).filter(u => !u.archived);
 
   return (
     <>
