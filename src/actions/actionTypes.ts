@@ -44,15 +44,15 @@ export interface LogInSuccessAction {
 }
 
 export interface LogOutRequestAction {
- type: typeof LOG_OUT_REQUEST;
+  type: typeof LOG_OUT_REQUEST;
 }
 
 export interface LogOutFailAction {
- type: typeof LOG_OUT_FAIL;
+  type: typeof LOG_OUT_FAIL;
 }
 
 export interface LogOutSuccessAction {
- type: typeof LOG_OUT_SUCCESS;
+  type: typeof LOG_OUT_SUCCESS;
 }
 
 export interface FetchDanceClassesAction {
@@ -123,6 +123,6 @@ export interface FetchAllUsersSuccessAction {
 
 export interface SetSelectedUserAction {
   type: typeof SET_SELECTED_USER;
-  payload: User;
+  payload: User | null;
   newData: boolean;
 }

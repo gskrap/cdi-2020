@@ -12,11 +12,11 @@ import { menuController } from '@ionic/core';
 import { IonReactRouter } from '@ionic/react-router';
 import HomePage from './pages/HomePage';
 import TeachersPage from './pages/TeachersPage';
-import {body, createOutline, logOutOutline, peopleOutline} from 'ionicons/icons';
+import {body, personOutline, createOutline, logOutOutline, peopleOutline} from 'ionicons/icons';
 import actions, {MappedActions} from './actions/actions';
 import {connect} from 'react-redux';
 import {AppState} from './store/defaultStore';
-import {UserRole} from './models/User';
+import {User, UserRole} from './models/User';
 
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
@@ -37,10 +37,10 @@ import UserDetailsPage from './pages/UserDetailsPage';
 import UserEditPage from './pages/UserEditPage';
 
 type AppProps = {
-  userRole: UserRole | null;
+  currentUser: User | null;
 }
 
-const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, actions }) => {
+const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ currentUser, actions }) => {
   const handleLogOut = () => {
     actions.logOut();
     menuController.close();
@@ -52,6 +52,10 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
         <IonMenu side='end' contentId='router'>
           <IonList className='ptxxxl'>
             <h1 className='openSansExtraBold mlxl'>Menu</h1>
+            <IonItem className='pvl' onClick={() => {actions.setSelectedUser(null); menuController.close()}} routerLink={`/users/${(currentUser || {}).id}`} routerDirection='forward'>
+              <span>Profile</span>
+              <IonIcon icon={personOutline} slot='end' />
+            </IonItem>
             <IonItem className='pvl' routerLink='/teachers' routerDirection='forward' onClick={() => menuController.close()}>
               <span>Teachers</span>
               <IonIcon icon={body} slot='end' />
@@ -61,7 +65,7 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
               <IonIcon icon={logOutOutline} slot='end' />
             </IonItem>
           </IonList>
-          {userRole === UserRole.ADMIN && (
+          {currentUser && currentUser.role === UserRole.ADMIN && (
             <IonList className='mbxxxxl'>
               <h1 className='openSansExtraBold mlxl'>Admin Menu</h1>
               <IonItem className='pvl' routerLink='/users' routerDirection='forward' onClick={() => menuController.close()}>
@@ -90,8 +94,8 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
 };
 
 const mapState = (state: AppState) => {
-  const userRole = state.currentUser && state.currentUser.role;
-  return { userRole }
+  const { currentUser } = state;
+  return { currentUser }
 };
 
 export default connect(mapState, actions)(App);

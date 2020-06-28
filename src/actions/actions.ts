@@ -214,7 +214,7 @@ export default (dispatch: Dispatch) => ({
       }
     },
 
-    setSelectedUser(user: User, newData: boolean = false) {
+    setSelectedUser(user: User | null, newData: boolean = false) {
       dispatch<SetSelectedUserAction>({
         type: SET_SELECTED_USER,
         payload: user,
