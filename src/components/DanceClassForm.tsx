@@ -119,7 +119,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
 
   return (
     <div className='fdc fjb height100'>
-      <IonList className='prxxl'>
+      <IonList className='mbxxl prxxl overflow-scroll'>
         <IonItem>
           <IonLabel className='yellow' position='floating'>Class Name</IonLabel>
           <IonInput

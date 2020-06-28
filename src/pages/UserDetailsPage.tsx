@@ -6,7 +6,7 @@ import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
 import {User, UserRole} from '../models/User';
-import {calendarOutline, callOutline, cloudUpload, mailOutline} from 'ionicons/icons';
+import {calendarOutline, callOutline, cloudUpload, mailOutline, peopleCircleOutline} from 'ionicons/icons';
 import moment from 'moment';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {EmergencyContact} from '../models/EmergencyContact';
@@ -117,6 +117,12 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
                 <IonButton className='flex1' routerLink={`/users/${userId}/edit`}>Update Info</IonButton>
               </div>
             )}
+            {selectedUser.role === UserRole.STUDENT && (selectedUser.groups || []).map((group, i) => (
+              <div className={`fdr ${i === 0 ? 'mtxxxl' : 'padded20'}`} key={i}>
+                {i === 0 ? <IonIcon className='prm' icon={peopleCircleOutline} size='large' /> : null}
+                <div className={`font20 ${i === 0 ? 'plxl' : 'plxxxl'}`}>{group.name}</div>
+              </div>
+            ))}
             {bio && <p>{bio}</p>}
             {userIsEntitled && (
               <div className='mtxxxxl pvxxl entitled-section'>
@@ -152,7 +158,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
                   <div className='pvxxl'>
                     <h3 className='yellow'>Emergency Contacts:</h3>
                     {emergencyContacts.map((contact: EmergencyContact, id) => (
-                      <div className={id === 0 ? 'ptxxl' : 'ptxxxxl'}>
+                      <div className={id === 0 ? 'ptxxl' : 'ptxxxxl'} key={id}>
                         <div className='fdr'>
                           <span className='pts font20'>{`${contact.first_name} ${contact.last_name} - ${contact.relationship}`}</span>
                         </div>

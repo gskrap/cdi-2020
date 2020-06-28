@@ -28,7 +28,7 @@ const UserList: React.FC<UserListProps & MappedActions<typeof actions>> = ({ use
       {!loading && users && (
         <>
           <div className='mtxxl fdr fjc'>
-          <a onClick={() => setShowArchived(!showArchived)} className='filter-link'>
+          <a onClick={() => setShowArchived(!showArchived)} className='filter-link yellow'>
             {showArchived ? 'Hide Archived Users' : 'Show Archived Users'}
           </a>
           </div>

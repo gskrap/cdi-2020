@@ -1,5 +1,6 @@
 @import "flex";
 @import "fonts";
+@import "loader";
 @import "overrides";
 @import "spacing";
 @import "variables";
@@ -16,6 +17,10 @@
 
 .width100 {
   width: 100%;
+}
+
+.overflow-scroll {
+  overflow: scroll;
 }
 
 .white {
@@ -136,6 +141,7 @@
 
 .filter-link {
   cursor: pointer;
+  text-decoration: underline;
   font-size: 18px;
   font-weight: bolder;
 }

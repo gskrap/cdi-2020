@@ -46,7 +46,7 @@ const UserForm: React.FC<UserFormProps & MappedActions<typeof actions>> = ({ ava
 
   return (
     <div className='fdc fjb height100'>
-      <form className='phxxl'>
+      <form className='phxxl overflow-scroll'>
         <IonItem className="ion-no-padding">
           <IonLabel className='yellow' position='floating'>First Name</IonLabel>
           <IonInput value={editUser.first_name} onIonChange={e => updateUserField({ first_name: e.detail.value! })} type='text'></IonInput>
@@ -80,7 +80,7 @@ const UserForm: React.FC<UserFormProps & MappedActions<typeof actions>> = ({ ava
             </IonSelect>
           </IonItem>
         )}
-        <IonItem className="ion-no-padding">
+        <IonItem className="mbxxl ion-no-padding">
           <IonLabel className='yellow' position='floating'>Bio</IonLabel>
           <IonTextarea value={editUser.bio} rows={12} onIonChange={e => updateUserField({ bio: e.detail.value! })}></IonTextarea>
         </IonItem>
