@@ -11,7 +11,6 @@ import moment from 'moment';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {EmergencyContact} from '../models/EmergencyContact';
 import {getUploadWidget} from '../helpers/getUploadWidget';
-import {Link} from 'react-router-dom';
 
 type UserDetailsPageProps = {
   currentUser: User | null;
@@ -68,7 +67,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
       }
     };
     fetchUserDetails();
-  }, [userId]);
+  }, [userId, actions]);
 
   React.useEffect(() => {
     if (userIsEntitled) {

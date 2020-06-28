@@ -16,7 +16,7 @@ const UserList: React.FC<UserListProps & MappedActions<typeof actions>> = ({ use
     if (!users) {
       actions.fetchAllUsers();
     }
-  }, [users]);
+  }, [users, actions]);
 
   return (
     <>
