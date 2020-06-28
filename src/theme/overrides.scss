@@ -4,9 +4,13 @@
 }
 
 .alert-wrapper {
+  border: 1px solid var(--ion-color-primary-contrast);
   background: var(--ion-color-primary) !important;
   .alert-title, .alert-message, .alert-checkbox-label, .alert-radio-label {
     color: var(--ion-color-primary-contrast) !important;
+  }
+  .alert-button, .alert-checkbox-group, .alert-radio-group {
+    border-color: var(--ion-color-primary-contrast) !important;
   }
 }
 
