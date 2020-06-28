@@ -15,10 +15,8 @@ const UserList: React.FC<UserListProps & MappedActions<typeof actions>> = ({ use
   const [showArchived, setShowArchived] = React.useState(true);
 
   React.useEffect(() => {
-    if (!users) {
-      actions.fetchAllUsers();
-    }
-  }, [users, actions]);
+    actions.fetchAllUsers();
+  }, [actions]);
 
   const usersToRender = showArchived ? users : users!.filter(u => !u.archived);
 
