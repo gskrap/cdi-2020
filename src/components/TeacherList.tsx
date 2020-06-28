@@ -17,17 +17,15 @@ const TeacherList: React.FC<TeacherListProps & MappedActions<typeof actions>> = 
   actions,
 }) => {
   React.useEffect(() => {
-    if (!teachers) {
-      const fetchTeachers = async () => {
-        try {
-          await actions.fetchTeachers()
-        } catch (e) {
-          console.error(e)
-        }
-      };
-      fetchTeachers();
-    }
-  }, [teachers, actions]);
+    const fetchTeachers = async () => {
+      try {
+        await actions.fetchTeachers()
+      } catch (e) {
+        console.error(e)
+      }
+    };
+    fetchTeachers();
+  }, [actions]);
 
   return (
     <>
