@@ -30,7 +30,7 @@ const TeacherList: React.FC<TeacherListProps & MappedActions<typeof actions>> = 
   return (
     <>
       {loading && <Loader />}
-      {!loading && teachers && teachers.map((teacher, i) => (
+      {!loading && teachers && teachers.filter(t => t.first_name !== 'TBD').map((teacher, i) => (
         <UserCard
           key={i}
           user={teacher}
