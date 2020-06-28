@@ -12,23 +12,36 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps & MappedActions<typeof actions>> = ({ users, loading, actions }) => {
+  const [showArchived, setShowArchived] = React.useState(true);
+
   React.useEffect(() => {
     if (!users) {
       actions.fetchAllUsers();
     }
   }, [users, actions]);
 
+  const usersToRender = showArchived ? users : users!.filter(u => !u.archived);
+
   return (
     <>
       {loading && <Loader />}
-      {!loading && users && users.map((user, i) => (
-        <UserCard
-          key={i}
-          user={user}
-          onClick={() => actions.setSelectedUser(user)}
-          routerLink={`/users/${user.id}`}
-        />
-      ))}
+      {!loading && users && (
+        <>
+          <div className='mtxxl fdr fjc'>
+          <a onClick={() => setShowArchived(!showArchived)} className='filter-link'>
+            {showArchived ? 'Hide Archived Users' : 'Show Archived Users'}
+          </a>
+          </div>
+          {usersToRender!.map((user, i) => (
+            <UserCard
+              key={i}
+              user={user}
+              onClick={() => actions.setSelectedUser(user)}
+              routerLink={`/users/${user.id}`}
+            />
+          ))}
+        </>
+      )}
     </>
   );
 };
