@@ -1,4 +1,4 @@
-import {IonButton, IonContent, IonIcon, IonPage} from '@ionic/react';
+import {IonButton, IonCheckbox, IonContent, IonIcon, IonPage} from '@ionic/react';
 import React from 'react';
 import AppHeader from '../components/AppHeader';
 import {RouteComponentProps} from 'react-router';
@@ -6,7 +6,7 @@ import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
 import {User, UserRole} from '../models/User';
-import {calendarOutline, callOutline, mailOutline, cloudUpload} from 'ionicons/icons';
+import {calendarOutline, callOutline, cloudUpload, mailOutline} from 'ionicons/icons';
 import moment from 'moment';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {EmergencyContact} from '../models/EmergencyContact';
@@ -27,6 +27,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
 
   const {
     id,
+    archived,
     role,
     first_name,
     last_name,
@@ -52,6 +53,20 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
       }
     };
     updateUserImgUrl(id!, imgUrl);
+  };
+
+  const handleArchivedChange = () => {
+    const newArchived = archived ? false! : true;
+    const setArchived = async () => {
+      try {
+        const response = await API.put(`/users/${id}`, { archived: newArchived });
+        const responseBody = await checkHttpResponse(response);
+        actions.setSelectedUser(responseBody, true);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    setArchived();
   };
 
   const uploadWidget = userIsEntitled || selectedUserIsCurrentUser ? getUploadWidget(uploadCallback) : null;
@@ -107,6 +122,16 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
               <div className='mtxxxxl pvxxl entitled-section'>
                 <div>
                   Only Administrators and Work-Study can see this section.
+                  {currentUser && currentUser.role === UserRole.ADMIN && (
+                    <div className='mtxxl fdr'>
+                      <div className='font18'>Archived</div>
+                      <IonCheckbox
+                        className='mlxxl'
+                        checked={archived}
+                        onIonChange={handleArchivedChange}
+                      />
+                    </div>
+                  )}
                   <h3 className='yellow'>Contact Info:</h3>
                   <div className='ptxl fdr'>
                     <IonIcon icon={callOutline} size='large'  />
