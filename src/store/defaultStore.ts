@@ -19,7 +19,6 @@ export type AppState = {
   groupsLoading: boolean,
   locations: DanceClassLocation[] | null,
   locationsLoading: boolean,
-  selectedUser: User | null,
   teachers: User[] | null,
   teachersLoading: boolean,
 }
@@ -36,7 +35,6 @@ const initialState: AppState = {
   groupsLoading: false,
   locations: null,
   locationsLoading: false,
-  selectedUser: null,
   teachers: null,
   teachersLoading: false,
 };

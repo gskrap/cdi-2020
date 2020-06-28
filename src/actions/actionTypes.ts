@@ -104,8 +104,3 @@ export interface FetchTeachersSuccessAction {
   type: typeof FETCH_TEACHERS_SUCCESS;
   payload: User[];
 }
-
-export interface SetSelectedUserAction {
-  type: typeof SET_SELECTED_USER;
-  payload: User | null;
-}

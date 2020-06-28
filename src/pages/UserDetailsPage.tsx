@@ -4,9 +4,9 @@ import AppHeader from '../components/AppHeader';
 import {RouteComponentProps} from 'react-router';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
-import actions from '../actions/actions';
+import actions, {MappedActions} from '../actions/actions';
 import {User, UserRole} from '../models/User';
-import {calendarOutline, callOutline, mailOutline} from 'ionicons/icons';
+import {calendarOutline, callOutline, mailOutline, cloudUpload} from 'ionicons/icons';
 import moment from 'moment';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {EmergencyContact} from '../models/EmergencyContact';
@@ -14,12 +14,15 @@ import {getUploadWidget} from '../helpers/getUploadWidget';
 
 type UserDetailsPageProps = {
   currentUser: User | null;
-  selectedUser: User | null;
 };
 
-const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps> = ({ currentUser, selectedUser }) => {
+const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ userId: string }> & MappedActions<typeof actions>> = ({
+  currentUser,
+  actions,
+  match,
+}) => {
+  const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
   const [emergencyContacts, setEmergencyContacts] = React.useState<EmergencyContact[]>([]);
-  const uploadWidget = getUploadWidget();
 
   const {
     id,
@@ -30,9 +33,39 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps> = ({
     email,
     phone,
     date_of_birth,
+    imgUrl,
   } = selectedUser || {};
 
   const userIsEntitled = currentUser && [UserRole.ADMIN, UserRole.WORK_STUDY].includes(currentUser.role);
+  const selectedUserIsCurrentUser = currentUser && currentUser.id === Number(match.params.userId);
+
+  const uploadCallback = (imgUrl: string) => {
+    const updateUserImgUrl = async (userId: number, imgUrl: string) => {
+      try {
+        const response = await API.put(`/users/${userId}`, { user: { imgUrl } });
+        const responseBody = await checkHttpResponse(response);
+        setSelectedUser(responseBody);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    updateUserImgUrl(id!, imgUrl);
+  };
+
+  const uploadWidget = userIsEntitled || selectedUserIsCurrentUser ? getUploadWidget(uploadCallback) : null;
+
+  React.useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await API.get(`/users/${match.params.userId}`);
+        const responseBody = await checkHttpResponse(response);
+        setSelectedUser(responseBody);
+      } catch (e) {
+        console.error(e)
+      }
+    };
+    fetchUserDetails();
+  }, [match.params.userId]);
 
   React.useEffect(() => {
     if (userIsEntitled) {
@@ -54,9 +87,14 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps> = ({
       <AppHeader title={selectedUser ? `${first_name} ${last_name}` : 'User Details'} />
       <IonContent>
         {selectedUser && (
-          <div className='phxxl'>
-            <div className='photo-placeholder' />
-            {userIsEntitled && (
+          <div className='ptxxl phxxl'>
+            {imgUrl && (
+              <img src={imgUrl} />
+            )}
+            {!imgUrl && (
+              <IonIcon className='photo-placeholder' icon={cloudUpload} />
+            )}
+            {(userIsEntitled || selectedUserIsCurrentUser) && (
               <IonButton className='mtxxl' expand='block' onClick={() => uploadWidget.open()}>Update Photo</IonButton>
             )}
             {bio && <p>{bio}</p>}
@@ -114,8 +152,8 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps> = ({
 };
 
 const mapState = (state: AppState) => {
-  const { currentUser, selectedUser } = state;
-  return { currentUser, selectedUser }
+  const { currentUser } = state;
+  return { currentUser }
 };
 
 export default connect(mapState, actions)(UserDetailsPage);

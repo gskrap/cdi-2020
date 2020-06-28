@@ -112,11 +112,6 @@ const reducers = (state: any, action: any) => {
         teachers: action.payload,
         teachersLoading: false,
       };
-    case SET_SELECTED_USER:
-      return {
-        ...state,
-        selectedUser: action.payload,
-      };
     default:
       return state
   }
