@@ -24,7 +24,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
   actions,
 }) => {
   const [groupedDanceClasses, setGroupedDanceClasses] = React.useState<{ [key: string]: DanceClass[]}>({});
-  const [showDeleteToast, setShowDeleteToast] = React.useState(false);
+  const [toastMsg, setToastMsg] = React.useState('');
 
   React.useEffect(() => {
     const fetchDanceClasses = async () => {
@@ -64,14 +64,14 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
         <React.Fragment key={i}>
           <IonItemDivider sticky>{date}</IonItemDivider>
           {groupedDanceClasses[date as keyof typeof groupedDanceClasses].map((danceClass, j) => (
-            <DanceClassCard key={`${i}-${j}`} danceClass={danceClass} showToast={() => setShowDeleteToast(true)} />
+            <DanceClassCard key={`${i}-${j}`} danceClass={danceClass} showToast={(msg: string) => setToastMsg(msg)} />
           ))}
         </React.Fragment>
       ))}
       <IonToast
-        isOpen={showDeleteToast}
-        onDidDismiss={() => setShowDeleteToast(false)}
-        message="Class Deleted"
+        isOpen={Boolean(toastMsg)}
+        onDidDismiss={() => setToastMsg('')}
+        message={toastMsg}
         position="bottom"
         duration={1200}
       />

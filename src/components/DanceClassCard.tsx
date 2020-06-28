@@ -23,7 +23,7 @@ type DanceClassCardProps = {
   danceClass: DanceClass,
   enableEdit: boolean,
   availableGroups: StudentGroup[] | null,
-  showToast: () => void,
+  showToast: (msg: string) => void,
 };
 
 const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof actions>> = ({
@@ -41,7 +41,7 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
   const handleDelete = () => {
     try {
       actions.deleteDanceClass(danceClass.id, () => {
-        showToast();
+        showToast('Class Deleted');
       });
     } catch (e) {
       console.error(e);

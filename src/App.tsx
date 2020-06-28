@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -34,6 +34,7 @@ import DanceClassDetailsPage from './pages/DanceClassDetailsPage';
 import DanceClassCreatePage from './pages/DanceClassCreatePage';
 import UsersPage from './pages/UsersPage';
 import UserDetailsPage from './pages/UserDetailsPage';
+import UserEditPage from './pages/UserEditPage';
 
 type AppProps = {
   userRole: UserRole | null;
@@ -81,6 +82,7 @@ const App: React.FC<AppProps & MappedActions<typeof actions>> = ({ userRole, act
           <Route exact path='/teachers' component={TeachersPage} />
           <Route exact path='/users' component={UsersPage} />
           <Route exact path='/users/:userId' component={UserDetailsPage} />
+          <Route exact path='/users/:userId/edit' component={UserEditPage} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

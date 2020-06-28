@@ -1,7 +1,7 @@
 import {IonButton, IonContent, IonIcon, IonPage} from '@ionic/react';
 import React from 'react';
 import AppHeader from '../components/AppHeader';
-import {RouteComponentProps} from 'react-router';
+import {Route, RouteComponentProps, Switch} from 'react-router';
 import {AppState} from '../store/defaultStore';
 import {connect} from 'react-redux';
 import actions, {MappedActions} from '../actions/actions';
@@ -11,6 +11,8 @@ import moment from 'moment';
 import {API, checkHttpResponse} from '../helpers/httpHelper';
 import {EmergencyContact} from '../models/EmergencyContact';
 import {getUploadWidget} from '../helpers/getUploadWidget';
+import {Link} from 'react-router-dom';
+import UserEditPage from './UserEditPage';
 
 type UserDetailsPageProps = {
   currentUser: User | null;
@@ -35,9 +37,10 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
     date_of_birth,
     imgUrl,
   } = selectedUser || {};
+  const { userId } = match.params;
 
   const userIsEntitled = currentUser && [UserRole.ADMIN, UserRole.WORK_STUDY].includes(currentUser.role);
-  const selectedUserIsCurrentUser = currentUser && currentUser.id === Number(match.params.userId);
+  const selectedUserIsCurrentUser = currentUser && currentUser.id === Number(userId);
 
   const uploadCallback = (imgUrl: string) => {
     const updateUserImgUrl = async (userId: number, imgUrl: string) => {
@@ -57,7 +60,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
   React.useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await API.get(`/users/${match.params.userId}`);
+        const response = await API.get(`/users/${userId}`);
         const responseBody = await checkHttpResponse(response);
         setSelectedUser(responseBody);
       } catch (e) {
@@ -65,7 +68,7 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
       }
     };
     fetchUserDetails();
-  }, [match.params.userId]);
+  }, [userId]);
 
   React.useEffect(() => {
     if (userIsEntitled) {
@@ -95,7 +98,19 @@ const UserDetailsPage: React.FC<UserDetailsPageProps & RouteComponentProps<{ use
               <IonIcon className='photo-placeholder' icon={cloudUpload} />
             )}
             {(userIsEntitled || selectedUserIsCurrentUser) && (
-              <IonButton className='mtxxl' expand='block' onClick={() => uploadWidget.open()}>Update Photo</IonButton>
+              <div className='fdr mtxxl'>
+                <IonButton className='flex1' onClick={() => uploadWidget.open()}>Update Photo</IonButton>
+                <Link
+                  className='flex1'
+                  to={{
+                    pathname: `/users/${userId}/edit`,
+                    // @ts-ignore
+                    userToEdit: selectedUser,
+                  }}
+                >
+                  <IonButton className='width100'>Update Info</IonButton>
+                </Link>
+              </div>
             )}
             {bio && <p>{bio}</p>}
             {userIsEntitled && (
