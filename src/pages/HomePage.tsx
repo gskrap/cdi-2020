@@ -50,7 +50,7 @@ const HomePage: React.FC<HomePageProps & MappedActions<typeof actions>> = ({
 
   return (
     <IonPage id='home-page'>
-      <AppHeader title={title} showFilterToggle={loggedIn && currentUser!.role !== UserRole.STUDENT} />
+      <AppHeader title={title} showFilterToggle={loggedIn && currentUser!.role !== UserRole.STUDENT} onClick={() => window.location.reload()} />
       <IonContent forceOverscroll={false}>
         {loggedIn &&  (
           <IonRefresher slot="fixed" onIonRefresh={refresh}>

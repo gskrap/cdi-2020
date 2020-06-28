@@ -12,6 +12,7 @@ type AppHeaderProps = {
   loggedIn: boolean,
   title: string,
   showFilterToggle?: boolean,
+  onClick?: () => void,
 }
 
 const AppHeader: React.FC<AppHeaderProps & MappedActions<typeof actions>> = ({
@@ -20,35 +21,42 @@ const AppHeader: React.FC<AppHeaderProps & MappedActions<typeof actions>> = ({
   loggedIn,
   title,
   showFilterToggle,
+  onClick,
   actions,
-}) => (
-  <IonHeader>
-    <IonToolbar color='primary'>
-      <IonButtons slot='start'>
-        {showFilterToggle && (
-          <IonToggle
-            checked={danceClassFilter === CLASS_FILTER.ALL}
-            onIonChange={() => {
-              const arg = danceClassFilter === CLASS_FILTER.ALL ? currentUserId! : undefined;
-              setTimeout(() => {
-                actions.fetchDanceClasses(arg);
-              }, 200)
-            }}
-          />
-        )}
-        <IonBackButton text=''></IonBackButton>
-      </IonButtons>
-      <IonTitle className='openSansExtraBold'>{title}</IonTitle>
-      {loggedIn && (
-        <IonButtons slot='end'>
-          <div onClick={() => menuController.open()} className='plxxxl prs'>
-            <img className='header-image' src='/assets/cdi-logo-white-small.png' alt='logo-small' />
-          </div>
+}) => {
+  const handleTitleClick = () => {
+    if (onClick) onClick();
+  };
+
+  return (
+    <IonHeader>
+      <IonToolbar color='primary'>
+        <IonButtons slot='start'>
+          {showFilterToggle && (
+            <IonToggle
+              checked={danceClassFilter === CLASS_FILTER.ALL}
+              onIonChange={() => {
+                const arg = danceClassFilter === CLASS_FILTER.ALL ? currentUserId! : undefined;
+                setTimeout(() => {
+                  actions.fetchDanceClasses(arg);
+                }, 200)
+              }}
+            />
+          )}
+          <IonBackButton text=''></IonBackButton>
         </IonButtons>
-      )}
-    </IonToolbar>
-  </IonHeader>
-);
+        <IonTitle className='openSansExtraBold' onClick={handleTitleClick}>{title}</IonTitle>
+        {loggedIn && (
+          <IonButtons slot='end'>
+            <div onClick={() => menuController.open()} className='plxxxl prs'>
+              <img className='header-image' src='/assets/cdi-logo-white-small.png' alt='logo-small'/>
+            </div>
+          </IonButtons>
+        )}
+      </IonToolbar>
+    </IonHeader>
+  )
+};
 
 const mapState = (state: AppState) => {
   return {
