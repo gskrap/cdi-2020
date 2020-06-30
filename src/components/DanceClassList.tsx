@@ -7,17 +7,19 @@ import {DanceClass} from '../models/DanceClass';
 import Loader from './Loader';
 import DanceClassCard from './DanceClassCard';
 import {IonIcon, IonItemDivider, IonToast} from '@ionic/react';
-import {LOCATION_TIMEZONE} from '../constants/settingsConstants';
+import {CLASS_FILTER, LOCATION_TIMEZONE} from '../constants/settingsConstants';
 import {helpCircleOutline} from 'ionicons/icons';
 import {User, UserRole} from '../models/User';
 
 type DanceClassListProps = {
+  filterPastClasses: boolean,
   currentUser: User,
   danceClasses: DanceClass[] | null,
   loading: boolean,
 }
 
 const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof actions>> = ({
+  filterPastClasses,
   currentUser,
   danceClasses,
   loading,
@@ -40,6 +42,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
 
   React.useEffect(() => {
     if (danceClasses) {
+      danceClasses = filterPastClasses ? danceClasses.filter(d => moment(d.end_time).isAfter(moment())) : danceClasses;
       const breakdown = danceClasses.reduce((rv, x) => {
         const key = moment(x.start_time).tz(LOCATION_TIMEZONE).format('dddd, MMMM D');
         // @ts-ignore
@@ -81,6 +84,7 @@ const DanceClassList: React.FC<DanceClassListProps & MappedActions<typeof action
 
 const mapState = (state: AppState) => {
   return {
+    filterPastClasses: state.danceClassFilter === CLASS_FILTER.MY,
     currentUser: state.currentUser!,
     danceClasses: state.danceClasses,
     loading: state.danceClassesLoading && !state.danceClassesLoaded,
