@@ -3,4 +3,4 @@ export enum CLASS_FILTER {
   ALL = 'ALL',
 }
 
-export const LOCATION_TIMEZONE = 'America/Los_Angeles';
+export const LOCATION_TIMEZONE = 'America/New_York';
