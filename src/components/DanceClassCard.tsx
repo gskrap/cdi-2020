@@ -71,7 +71,8 @@ const DanceClassCard: React.FC<DanceClassCardProps & MappedActions<typeof action
         ]}
       />
       <div className='fdr'>
-        <div className='phxl fdc fjc'>
+        <div className='phxl fdc fjc relative-container'>
+          <div className='bubble-line'/>
           <div className='time-bubble tac'>
             <div className='mtl font14 openSansBold'><IonIcon className='prm' icon={timeOutline} />{start}</div>
             <div className='font14 openSansBold'><IonIcon className='plm r180' icon={arrowUndoOutline} />{end}</div>

@@ -105,29 +105,24 @@
   background-color: var(--ion-color-primary);
   position: relative;
   z-index: 1;
-  &:before {
-    content: '';
-    height: 78px;
-    border-left: 2px solid var(--ion-color-primary);
-    position: absolute;
-    bottom: 100px;
-    left: 48px;
-    z-index: 0;
-  }
-  &:after {
-    content: '';
-    height: 78px;
-    border-left: 2px solid var(--ion-color-primary);
-    position: absolute;
-    top: 100px;
-    left: 48px;
-    z-index: 0;
-  }
 
   .timezone-indicator {
     font-size: 10px;
     font-weight: bolder;
   }
+}
+
+.relative-container {
+  position: relative;
+}
+
+.bubble-line {
+  content: '';
+  height: 100%;
+  border-left: 2px solid var(--ion-color-primary);
+  position: absolute;
+  left: 49%;
+  z-index: 0;
 }
 
 .entitled-section {
