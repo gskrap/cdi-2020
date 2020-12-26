@@ -43,7 +43,7 @@ const AppHeader: React.FC<AppHeaderProps & MappedActions<typeof actions>> = ({
               }}
             />
           )}
-          <IonBackButton text=''></IonBackButton>
+          <IonBackButton className='back-button' text=''></IonBackButton>
         </IonButtons>
         <IonTitle className='openSansExtraBold' onClick={handleTitleClick}>{title}</IonTitle>
         {loggedIn && (
