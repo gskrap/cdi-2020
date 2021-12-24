@@ -133,7 +133,7 @@ const DanceClassForm: React.FC<DanceClassFormProps & MappedActions<typeof  actio
           <IonDatetime
             displayFormat='MMM D YYYY'
             min='2000-06-01'
-            max='2021-12-25'
+            max='2022-12-25'
             value={date}
             onIonChange={e => setDate(e.detail.value!)}
             display-timezone={LOCATION_TIMEZONE}
